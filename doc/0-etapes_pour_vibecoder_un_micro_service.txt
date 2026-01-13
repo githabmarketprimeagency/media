@@ -1,0 +1,38 @@
+Méthodologie pour developper un micro service 
+
+
+1 - Créer le contrat d’interface en utilisant le standard Open API et le format yaml de préférence.
+
+2 - Copier le dossier boilerplate_pour_bolt en lui donnant le nom qu’on souhaite pour le micro service.
+
+3 - Modifier le prompt 1-definir_variables_pour_bolt.txt en fournissant les variables necessaires.
+
+4 - Créer une branche locale nommée feature/v1.0
+
+5 - Placer le contrat d’interface dans le repertoire suivant :
+
+ui/src/main/resources/$nommicroservice.yml
+
+6 - Lancer le prompt 2-definir_infos_micro_service.txt pour remplacer "boilerplate" par le nom du micro service
+
+7 - Pousser la branche locale nommée feature/v1.0 sur un github privé.
+
+8 - Importer le projet dans Bolt.new et se placer sur la branche feature/v1.0
+
+9 - Lancer le prompt 3-recherche_entites_openapi.txt pour trouver toutes les entités présentes dans l’OpenApi, conserver la liste des entités trouvées dans l’ordre fourni par Bolt et ignorer les entités dont le nom commence par « Full »
+
+10 - Générer les endpoint API pour la première entité fournie par Bolt :
+
+    A - Indiquer à bolt ce que vaut la variable $endpoints (nom de l'entité au pluriel en anglais) et lancer le prompt 4-generation_des_endpoints_pour_une_entite.txt
+     
+    B - Lancer le prompt 5-suppression_elements_par_defaut_concernant_requestcheck.txt 
+
+    C - Tester les endpoints générés
+
+11 - Générer les endpoint API des prochaines entités fournie par Bolt.new :
+
+    A - Lancer le prompt 4-generation_des_endpoints_pour_une_entite.txt en remplaçant le textes
+     
+    B - Tester les endpoints générés
+
+    Cette étape est a répéter autant de fois qu'il y a des entités identifiées

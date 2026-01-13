@@ -244,3 +244,136 @@ databaseChangeLog:
             columns:
               - column:
                   name: user_ip
+
+  - changeSet:
+      id: 5-create-provider-table
+      author: media
+      changes:
+        - createTable:
+            tableName: provider
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: uuid
+                  type: uuid
+                  constraints:
+                    unique: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: provider_type
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: provider_state
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: provider_auth_type
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: provider_location
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: client_id
+                  type: varchar(255)
+              - column:
+                  name: client_secret
+                  type: varchar(255)
+              - column:
+                  name: redirect_uri
+                  type: varchar(500)
+              - column:
+                  name: scopes
+                  type: varchar(255)
+              - column:
+                  name: tenant_id
+                  type: varchar(500)
+              - column:
+                  name: api_key
+                  type: varchar(500)
+              - column:
+                  name: impersonated_user_email
+                  type: varchar(100)
+              - column:
+                  name: drive_id
+                  type: varchar(500)
+              - column:
+                  name: access_token
+                  type: varchar(4000)
+              - column:
+                  name: access_token_expired_at
+                  type: timestamp
+              - column:
+                  name: is_expirable_access_token
+                  type: boolean
+              - column:
+                  name: refresh_token
+                  type: varchar(4000)
+              - column:
+                  name: refresh_token_expired_at
+                  type: timestamp
+              - column:
+                  name: metadatas
+                  type: jsonb
+              - column:
+                  name: metadatas_indexes
+                  type: jsonb
+              - column:
+                  name: created_by
+                  type: varchar(255)
+              - column:
+                  name: updated_by
+                  type: varchar(255)
+              - column:
+                  name: deleted_by
+                  type: varchar(255)
+              - column:
+                  name: created_at
+                  type: timestamp
+                  defaultValueComputed: CURRENT_TIMESTAMP
+              - column:
+                  name: updated_at
+                  type: timestamp
+              - column:
+                  name: deleted_at
+                  type: timestamp
+
+  - changeSet:
+      id: 6-create-provider-indexes
+      author: media
+      changes:
+        - createIndex:
+            indexName: idx_provider_uuid
+            tableName: provider
+            columns:
+              - column:
+                  name: uuid
+        - createIndex:
+            indexName: idx_provider_type
+            tableName: provider
+            columns:
+              - column:
+                  name: provider_type
+        - createIndex:
+            indexName: idx_provider_state
+            tableName: provider
+            columns:
+              - column:
+                  name: provider_state

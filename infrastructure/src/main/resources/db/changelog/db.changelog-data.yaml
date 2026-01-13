@@ -1,0 +1,71 @@
+databaseChangeLog:
+  - changeSet:
+      id: 7-insert-sample-providers
+      author: media
+      changes:
+        - insert:
+            tableName: provider
+            columns:
+              - column:
+                  name: name
+                  value: Local Storage Provider
+              - column:
+                  name: provider_type
+                  value: native
+              - column:
+                  name: provider_state
+                  value: ready
+              - column:
+                  name: provider_auth_type
+                  value: microsoft_graph_application
+              - column:
+                  name: provider_location
+                  value: local
+              - column:
+                  name: is_expirable_access_token
+                  valueBoolean: false
+              - column:
+                  name: created_by
+                  value: system
+        - insert:
+            tableName: provider
+            columns:
+              - column:
+                  name: name
+                  value: SharePoint Production
+              - column:
+                  name: provider_type
+                  value: share_point
+              - column:
+                  name: provider_state
+                  value: ready
+              - column:
+                  name: provider_auth_type
+                  value: microsoft_graph_application
+              - column:
+                  name: provider_location
+                  value: remote
+              - column:
+                  name: client_id
+                  value: sample-client-id-123
+              - column:
+                  name: client_secret
+                  value: sample-secret-xyz
+              - column:
+                  name: redirect_uri
+                  value: https://example.com/callback
+              - column:
+                  name: scopes
+                  value: Files.Read Files.Write
+              - column:
+                  name: tenant_id
+                  value: sample-tenant-456
+              - column:
+                  name: drive_id
+                  value: sample-drive-789
+              - column:
+                  name: is_expirable_access_token
+                  valueBoolean: true
+              - column:
+                  name: created_by
+                  value: admin

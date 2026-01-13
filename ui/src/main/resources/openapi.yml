@@ -1,50 +1,50 @@
 openapi: 3.0.0
 info:
-  title: Boilerplate
+  title: Media MS
   description: ' <b>TECHNICAL SPECS</b> :<br/><br/> * EQUAL OPERATOR : If you provide any value, by default the endpoints will filter data using EQUAL operator (strict).<br/><br/> _Example of values : Mateo | 1<br/><br/> * LIKE OPERATOR : If you provide any integer, numeric or date-time value starting and or ending with percentage sign %, the endpoints will filter data using LIKE operator (non strict).<br/><br/> _Examples values :  %Mateo% | %Mateo | Mateo%<br/><br/> * OR OPERATOR : If you provide any value starting and ending by square brackets sign [] , the endpoints will filter using OR OPERATOR.<br/><br/> _Examples values :  [Mateo,John,Jane] | [1,2,3]'
   version: 1.0.0
 
 paths:
-  /request-checks:
+  /medias:
     get:
       tags:
-        - Request Check
-      summary: Search request checks by criteria.
-      operationId: findRequestChecks
+        - Media
+      summary: Search medias by criteria.
+      operationId: findMedias
       parameters:
         - in: query
           name: criteria
           schema:
-            $ref: '#/components/schemas/FindRequestChecksCriteria'
+            $ref: '#/components/schemas/FindMediasCriteria'
           style: form
           explode: true
       responses:
         '200':
-          description: Returns the list of request checks.
+          description: Returns the list of medias.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RequestCheckPaginatedRepresentation'
+                $ref: '#/components/schemas/MediaPaginatedRepresentation'
         '500':
           description: A server error has occurred.
     post:
       tags:
-        - Request Check
-      summary: Create a request check.
-      operationId: createOneRequestCheck
+        - Media
+      summary: Create a media.
+      operationId: createOneMedia
       requestBody:
         required: true
         content:
-          application/json:
+          multipart/form-data:
             schema:
-              $ref: '#/components/schemas/RequestCheckCreateRequest'
+              $ref: '#/components/schemas/MediaCreateRequest'
       responses:
         '201':
-          description: Returns the result of the check (spam or not).
+          description: Returns the created media.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ResultCheck'
+                $ref: '#/components/schemas/Media'
         '400':
           description: Data validation failed.
           content:
@@ -54,22 +54,22 @@ paths:
         '500':
           description: A server error has occurred.
 
-  /request-checks/count:
+  /medias/count:
     get:
       tags:
-        - Request Check
-      summary: Count request checks by criteria.
-      operationId: countRequestChecks
+        - Media
+      summary: Count medias by criteria.
+      operationId: countMedias
       parameters:
         - in: query
           name: criteria
           schema:
-            $ref: '#/components/schemas/CountRequestChecksCriteria'
+            $ref: '#/components/schemas/CountMediasCriteria'
           style: form
           explode: true
       responses:
         '200':
-          description: Returns the number of request checks.
+          description: Returns the number of medias.
           content:
             application/json:
               schema:
@@ -78,75 +78,247 @@ paths:
         '500':
           description: A server error has occurred.
 
-  /request-checks/{uuid}:
+  /medias/{uuid}/read:
     get:
       tags:
-        - Request Check
-      summary: Retrieve a request check.
-      operationId: getOneRequestCheck
+        - Media
+      summary: Read a media file.
+      operationId: readOneMedia
       parameters:
         - $ref: '#/components/parameters/PathUuid'
       responses:
         '200':
-          description: Returns a request check.
+          description: Returns the media file content.
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+        '500':
+          description: A server error has occurred.
+
+  /medias/{uuid}/download:
+    get:
+      tags:
+        - Media
+      summary: Download a media file.
+      operationId: downloadOneMedia
+      parameters:
+        - $ref: '#/components/parameters/PathUuid'
+      responses:
+        '200':
+          description: Returns the downloadable media content.
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+        '500':
+          description: A server error has occurred.
+
+  /medias/{uuid}:
+    get:
+      tags:
+        - Media
+      summary: Retrieve a media.
+      operationId: getOneMedia
+      parameters:
+        - $ref: '#/components/parameters/PathUuid'
+      responses:
+        '200':
+          description: Returns a media.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RequestCheck'
+                $ref: '#/components/schemas/Media'
         '500':
           description: A server error has occurred.
     delete:
       tags:
-        - Request Check
-      summary: Delete a request check.
-      operationId: deleteOneRequestCheck
+        - Media
+      summary: Delete a media.
+      operationId: deleteOneMedia
       parameters:
         - $ref: '#/components/parameters/PathUuid'
       responses:
         '204':
-          description: The request check has been deleted.
+          description: The media has been deleted.
         '500':
           description: A server error has occurred.
-
-  /request-spams:
-    get:
+    patch:
       tags:
-        - Request Spam
-      summary: Search request spams by criteria.
-      operationId: findRequestSpams
+        - Media
+      summary: Update a media.
+      operationId: updateOneMedia
       parameters:
-        - in: query
-          name: criteria
-          schema:
-            $ref: '#/components/schemas/FindRequestSpamsCriteria'
-          style: form
-          explode: true
+        - $ref: '#/components/parameters/PathUuid'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MediaUpdateRequest'
       responses:
         '200':
-          description: Returns the list of request spams.
+          description: Returns the updated media.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RequestSpamPaginatedRepresentation'
+                $ref: '#/components/schemas/Media'
+        '400':
+          description: Data validation failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConstraintValidationErrors'
         '500':
           description: A server error has occurred.
 
-  /request-spams/count:
+  /medias/import:
+    post:
+      tags:
+        - Media
+      summary: Import a media.
+      operationId: importOneMedia
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MediaImportRequest'
+      responses:
+        '201':
+          description: Returns the imported media.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Media'
+        '400':
+          description: Data validation failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConstraintValidationErrors'
+        '500':
+          description: A server error has occurred.
+
+  /medias/{uuid}/metadatas:
+    delete:
+      tags:
+        - Media
+      summary: Delete media metadatas.
+      operationId: deleteOneMediaMetadatas
+      parameters:
+        - $ref: '#/components/parameters/PathUuid'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Metadatas'
+      responses:
+        '204':
+          description: The metadatas have been deleted.
+        '400':
+          description: Data validation failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConstraintValidationErrors'
+        '500':
+          description: A server error has occurred.
+    patch:
+      tags:
+        - Media
+      summary: Create or update media metadatas.
+      operationId: upsertOneMediaMetadatas
+      parameters:
+        - $ref: '#/components/parameters/PathUuid'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Metadatas'
+      responses:
+        '204':
+          description: The metadatas have been updated.
+        '400':
+          description: Data validation failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConstraintValidationErrors'
+        '500':
+          description: A server error has occurred.
+
+  /providers:
     get:
       tags:
-        - Request Spam
-      summary: Count request spams by criteria.
-      operationId: countRequestSpams
+        - Provider
+      summary: Search providers by criteria.
+      operationId: findProviders
       parameters:
         - in: query
           name: criteria
           schema:
-            $ref: '#/components/schemas/CountRequestSpamsCriteria'
+            $ref: '#/components/schemas/FindProvidersCriteria'
           style: form
           explode: true
       responses:
         '200':
-          description: Returns the number of request spams.
+          description: Returns the list of providers.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProviderPaginatedRepresentation'
+        '500':
+          description: A server error has occurred.
+    post:
+      tags:
+        - Provider
+      summary: Create a provider.
+      operationId: createOneProvider
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/NativeProviderCreateRequest'
+                - $ref: '#/components/schemas/SharePointProviderCreateRequest'
+      responses:
+        '201':
+          description: Returns the created provider.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Provider'
+        '400':
+          description: Data validation failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConstraintValidationErrors'
+        '500':
+          description: A server error has occurred.
+
+  /providers/count:
+    get:
+      tags:
+        - Provider
+      summary: Count providers by criteria.
+      operationId: countProviders
+      parameters:
+        - in: query
+          name: criteria
+          schema:
+            $ref: '#/components/schemas/CountProvidersCriteria'
+          style: form
+          explode: true
+      responses:
+        '200':
+          description: Returns the number of providers.
           content:
             application/json:
               schema:
@@ -155,110 +327,113 @@ paths:
         '500':
           description: A server error has occurred.
 
-  /request-spams/{uuid}:
+  /providers/{uuid}:
     get:
       tags:
-        - Request Spam
-      summary: Retrieve a request spam.
-      operationId: getOneRequestSpam
+        - Provider
+      summary: Retrieve a provider.
+      operationId: getOneProvider
       parameters:
         - $ref: '#/components/parameters/PathUuid'
       responses:
         '200':
-          description: Returns a request spam.
+          description: Returns a provider.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RequestSpam'
+                $ref: '#/components/schemas/Provider'
         '500':
           description: A server error has occurred.
     delete:
       tags:
-        - Request Spam
-      summary: Delete a request spam.
-      operationId: deleteOneRequestSpam
+        - Provider
+      summary: Delete a provider.
+      operationId: deleteOneProvider
       parameters:
         - $ref: '#/components/parameters/PathUuid'
       responses:
         '204':
-          description: The request spam has been deleted.
+          description: The provider has been deleted.
         '500':
           description: A server error has occurred.
-
-  /user-spams:
-    get:
+    patch:
       tags:
-        - User Spam
-      summary: Search user spams by criteria.
-      operationId: findUserSpams
-      parameters:
-        - in: query
-          name: criteria
-          schema:
-            $ref: '#/components/schemas/FindUserSpamsCriteria'
-          style: form
-          explode: true
-      responses:
-        '200':
-          description: Returns the list of user spams.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UserSpamPaginatedRepresentation'
-        '500':
-          description: A server error has occurred.
-
-  /user-spams/count:
-    get:
-      tags:
-        - User Spam
-      summary: Count user spams by criteria.
-      operationId: countUserSpams
-      parameters:
-        - in: query
-          name: criteria
-          schema:
-            $ref: '#/components/schemas/CountUserSpamsCriteria'
-          style: form
-          explode: true
-      responses:
-        '200':
-          description: Returns the number of user spams.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/IntegerType'
-              example: 10
-        '500':
-          description: A server error has occurred.
-
-  /user-spams/{uuid}:
-    get:
-      tags:
-        - User Spam
-      summary: Retrieve a user spam.
-      operationId: getOneUserSpam
+        - Provider
+      summary: Update a provider.
+      operationId: updateOneProvider
       parameters:
         - $ref: '#/components/parameters/PathUuid'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/NativeProviderUpdateRequest'
+                - $ref: '#/components/schemas/SharePointProviderUpdateRequest'
       responses:
         '200':
-          description: Returns a user spam.
+          description: Returns the updated provider.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserSpam'
+                $ref: '#/components/schemas/Provider'
+        '400':
+          description: Data validation failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConstraintValidationErrors'
         '500':
           description: A server error has occurred.
+
+  /providers/{uuid}/metadatas:
     delete:
       tags:
-        - User Spam
-      summary: Delete a user spam.
-      operationId: deleteOneUserSpam
+        - Provider
+      summary: Delete provider metadatas.
+      operationId: deleteOneProviderMetadatas
       parameters:
         - $ref: '#/components/parameters/PathUuid'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Metadatas'
       responses:
         '204':
-          description: The user spam has been deleted.
+          description: The metadatas have been deleted.
+        '400':
+          description: Data validation failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConstraintValidationErrors'
+        '500':
+          description: A server error has occurred.
+    patch:
+      tags:
+        - Provider
+      summary: Create or update provider metadatas.
+      operationId: upsertOneProviderMetadatas
+      parameters:
+        - $ref: '#/components/parameters/PathUuid'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Metadatas'
+      responses:
+        '204':
+          description: The metadatas have been updated.
+        '400':
+          description: Data validation failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConstraintValidationErrors'
         '500':
           description: A server error has occurred.
 
@@ -292,15 +467,36 @@ components:
       description: |
         Represents a number.
 
+    NumberType:
+      type: number
+      format: float
+      description: |
+        Represents a float number.
+
     BooleanType:
       type: boolean
       description: |
         Represents a boolean.
 
-    HttpMethodEnum:
+    ProviderTypeEnum:
       type: string
-      enum: [GET, POST, PUT, PATCH, DELETE]
-      description: HTTP method.
+      enum: [native, share_point, one_drive, google_drive, azure_media]
+      description: Provider type.
+
+    ProviderAuthTypeEnum:
+      type: string
+      enum: [microsoft_graph_application, microsoft_graph_application_user_id, microsoft_graph_application_group_id, microsoft_behalf_user, google_api_key, google_service_account, google_service_account_impersonated_user]
+      description: Provider authentication type.
+
+    ProviderStateEnum:
+      type: string
+      enum: [not_configured, ready, expired]
+      description: Provider state.
+
+    ProviderLocationEnum:
+      type: string
+      enum: [local, remote]
+      description: Provider location.
 
     ###
     # Common objects
@@ -329,11 +525,23 @@ components:
         deletedAt:
           $ref: '#/components/schemas/DateTimeType'
 
-    ExpiredAt:
+    CreatedBy:
       type: object
       properties:
-        expiredAt:
-          $ref: '#/components/schemas/DateTimeType'
+        createdBy:
+          $ref: '#/components/schemas/StringType'
+
+    UpdatedBy:
+      type: object
+      properties:
+        updatedBy:
+          $ref: '#/components/schemas/StringType'
+
+    DeletedBy:
+      type: object
+      properties:
+        deletedBy:
+          $ref: '#/components/schemas/StringType'
 
     Timestamped:
       allOf:
@@ -341,16 +549,39 @@ components:
         - $ref: '#/components/schemas/UpdatedAt'
         - $ref: '#/components/schemas/DeletedAt'
 
+    Audited:
+      allOf:
+        - $ref: '#/components/schemas/CreatedBy'
+        - $ref: '#/components/schemas/UpdatedBy'
+        - $ref: '#/components/schemas/DeletedBy'
+
     HateoasLink:
       type: object
       properties:
         href:
           type: string
 
-    ResourceLinks:
+    MediaLinks:
       type: object
       properties:
         self:
+          $ref: '#/components/schemas/HateoasLink'
+        read:
+          $ref: '#/components/schemas/HateoasLink'
+        download:
+          $ref: '#/components/schemas/HateoasLink'
+        update:
+          $ref: '#/components/schemas/HateoasLink'
+        delete:
+          $ref: '#/components/schemas/HateoasLink'
+      readOnly: true
+
+    ProviderLinks:
+      type: object
+      properties:
+        self:
+          $ref: '#/components/schemas/HateoasLink'
+        update:
           $ref: '#/components/schemas/HateoasLink'
         delete:
           $ref: '#/components/schemas/HateoasLink'
@@ -447,16 +678,28 @@ components:
         deletedAtMax:
           $ref: '#/components/schemas/DateTimeType'
 
-    ExpiredAtMin:
+    AccessTokenExpiredAtMin:
       type: object
       properties:
-        expiredAtMin:
+        accessTokenExpiredAtMin:
           $ref: '#/components/schemas/DateTimeType'
 
-    ExpiredAtMax:
+    AccessTokenExpiredAtMax:
       type: object
       properties:
-        expiredAtMax:
+        accessTokenExpiredAtMax:
+          $ref: '#/components/schemas/DateTimeType'
+
+    RefreshTokenExpiredAtMin:
+      type: object
+      properties:
+        refreshTokenExpiredAtMin:
+          $ref: '#/components/schemas/DateTimeType'
+
+    RefreshTokenExpiredAtMax:
+      type: object
+      properties:
+        refreshTokenExpiredAtMax:
           $ref: '#/components/schemas/DateTimeType'
 
     PageNumber:
@@ -482,9 +725,9 @@ components:
       description: Sort order. Default => createdAt:ASC|id:DESC
 
     ###
-    # Criteria (Request Check)
+    # Criteria (Media)
     ###
-    RequestChecksCriteriaBase:
+    MediasCriteriaBase:
       type: object
       allOf:
         - $ref: '#/components/schemas/Uuid'
@@ -498,331 +741,483 @@ components:
         entityUuid:
           $ref: '#/components/schemas/StringType'
           description: '[uuid]'
-        userIp:
+        name:
           $ref: '#/components/schemas/StringType'
-        userAgent:
+        description:
           $ref: '#/components/schemas/StringType'
-        method:
-          $ref: '#/components/schemas/HttpMethodEnum'
-        content:
+        extension:
           $ref: '#/components/schemas/StringType'
-        url:
+        mimeType:
           $ref: '#/components/schemas/StringType'
-        referrer:
-          $ref: '#/components/schemas/StringType'
-        author:
-          $ref: '#/components/schemas/StringType'
+        sizeMin:
+          $ref: '#/components/schemas/NumberType'
+        sizeMax:
+          $ref: '#/components/schemas/NumberType'
         metadatas:
           $ref: '#/components/schemas/StringType'
           description: Free-text metadata filter (implementation-defined).
+        providerUuid:
+          $ref: '#/components/schemas/StringType'
+          description: '[uuid]'
+        providerPath:
+          $ref: '#/components/schemas/StringType'
+        createdBy:
+          $ref: '#/components/schemas/StringType'
+        updatedBy:
+          $ref: '#/components/schemas/StringType'
+        deletedBy:
+          $ref: '#/components/schemas/StringType'
 
-    FindRequestChecksCriteria:
+    FindMediasCriteria:
       type: object
       allOf:
-        - $ref: '#/components/schemas/RequestChecksCriteriaBase'
+        - $ref: '#/components/schemas/MediasCriteriaBase'
         - $ref: '#/components/schemas/PageNumber'
         - $ref: '#/components/schemas/PageSize'
         - $ref: '#/components/schemas/OrderBy'
 
-    CountRequestChecksCriteria:
+    CountMediasCriteria:
       type: object
       allOf:
-        - $ref: '#/components/schemas/RequestChecksCriteriaBase'
+        - $ref: '#/components/schemas/MediasCriteriaBase'
 
     ###
-    # Criteria (Request Spam)
+    # Criteria (Provider)
     ###
-    RequestSpamsCriteriaBase:
+    ProvidersCriteriaBase:
       type: object
       allOf:
         - $ref: '#/components/schemas/Uuid'
-        - $ref: '#/components/schemas/ExpiredAtMin'
-        - $ref: '#/components/schemas/ExpiredAtMax'
         - $ref: '#/components/schemas/CreatedAtMin'
         - $ref: '#/components/schemas/CreatedAtMax'
         - $ref: '#/components/schemas/UpdatedAtMin'
         - $ref: '#/components/schemas/UpdatedAtMax'
         - $ref: '#/components/schemas/DeletedAtMin'
         - $ref: '#/components/schemas/DeletedAtMax'
+        - $ref: '#/components/schemas/AccessTokenExpiredAtMin'
+        - $ref: '#/components/schemas/AccessTokenExpiredAtMax'
+        - $ref: '#/components/schemas/RefreshTokenExpiredAtMin'
+        - $ref: '#/components/schemas/RefreshTokenExpiredAtMax'
       properties:
         entityUuid:
           $ref: '#/components/schemas/StringType'
           description: '[uuid]'
-        userIp:
+        name:
           $ref: '#/components/schemas/StringType'
-        userAgent:
+        providerType:
+          $ref: '#/components/schemas/ProviderTypeEnum'
+        providerAuthType:
+          $ref: '#/components/schemas/ProviderAuthTypeEnum'
+        providerState:
+          $ref: '#/components/schemas/ProviderStateEnum'
+        providerLocation:
+          $ref: '#/components/schemas/ProviderLocationEnum'
+        clientId:
           $ref: '#/components/schemas/StringType'
-        method:
-          $ref: '#/components/schemas/HttpMethodEnum'
-        content:
+        clientSecret:
           $ref: '#/components/schemas/StringType'
-        url:
+        redirectUri:
           $ref: '#/components/schemas/StringType'
-        referrer:
+        scopes:
           $ref: '#/components/schemas/StringType'
-        enabled:
+        tenantId:
+          $ref: '#/components/schemas/StringType'
+        driveId:
+          $ref: '#/components/schemas/StringType'
+        isExpirableAccessToken:
           $ref: '#/components/schemas/BooleanType'
-        expiredInSeconds:
-          $ref: '#/components/schemas/IntegerType'
         metadatas:
           $ref: '#/components/schemas/StringType'
           description: Free-text metadata filter (implementation-defined).
+        createdBy:
+          $ref: '#/components/schemas/StringType'
+        updatedBy:
+          $ref: '#/components/schemas/StringType'
+        deletedBy:
+          $ref: '#/components/schemas/StringType'
 
-    FindRequestSpamsCriteria:
+    FindProvidersCriteria:
       type: object
       allOf:
-        - $ref: '#/components/schemas/RequestSpamsCriteriaBase'
+        - $ref: '#/components/schemas/ProvidersCriteriaBase'
         - $ref: '#/components/schemas/PageNumber'
         - $ref: '#/components/schemas/PageSize'
         - $ref: '#/components/schemas/OrderBy'
 
-    CountRequestSpamsCriteria:
+    CountProvidersCriteria:
       type: object
       allOf:
-        - $ref: '#/components/schemas/RequestSpamsCriteriaBase'
+        - $ref: '#/components/schemas/ProvidersCriteriaBase'
 
     ###
-    # Criteria (User Spam)
+    # Domain schemas - Provider
     ###
-    UserSpamsCriteriaBase:
+    ProviderBase:
       type: object
-      allOf:
-        - $ref: '#/components/schemas/Uuid'
-        - $ref: '#/components/schemas/ExpiredAtMin'
-        - $ref: '#/components/schemas/ExpiredAtMax'
-        - $ref: '#/components/schemas/CreatedAtMin'
-        - $ref: '#/components/schemas/CreatedAtMax'
-        - $ref: '#/components/schemas/UpdatedAtMin'
-        - $ref: '#/components/schemas/UpdatedAtMax'
-        - $ref: '#/components/schemas/DeletedAtMin'
-        - $ref: '#/components/schemas/DeletedAtMax'
-      properties:
-        entityUuid:
-          $ref: '#/components/schemas/StringType'
-          description: '[uuid]'
-        userIp:
-          $ref: '#/components/schemas/StringType'
-        author:
-          $ref: '#/components/schemas/StringType'
-        method:
-          $ref: '#/components/schemas/HttpMethodEnum'
-        enabled:
-          $ref: '#/components/schemas/BooleanType'
-        expiredInSeconds:
-          $ref: '#/components/schemas/IntegerType'
-        metadatas:
-          $ref: '#/components/schemas/StringType'
-          description: Free-text metadata filter (implementation-defined).
-
-    FindUserSpamsCriteria:
-      type: object
-      allOf:
-        - $ref: '#/components/schemas/UserSpamsCriteriaBase'
-        - $ref: '#/components/schemas/PageNumber'
-        - $ref: '#/components/schemas/PageSize'
-        - $ref: '#/components/schemas/OrderBy'
-
-    CountUserSpamsCriteria:
-      type: object
-      allOf:
-        - $ref: '#/components/schemas/UserSpamsCriteriaBase'
-
-    ###
-    # Domain schemas
-    ###
-    ResultCheck:
-      type: object
-      properties:
-        isSpam:
-          $ref: '#/components/schemas/BooleanType'
-
-    RequestCheck:
-      type: object
-      required:
-        - content
-        - url
       allOf:
         - $ref: '#/components/schemas/Uuid'
         - $ref: '#/components/schemas/Timestamped'
+        - $ref: '#/components/schemas/Audited'
+      properties:
+        name:
+          type: string
+          maxLength: 255
+          minLength: 3
+        providerType:
+          $ref: '#/components/schemas/ProviderTypeEnum'
+        providerState:
+          $ref: '#/components/schemas/ProviderStateEnum'
+        providerAuthType:
+          $ref: '#/components/schemas/ProviderAuthTypeEnum'
+        providerLocation:
+          $ref: '#/components/schemas/ProviderLocationEnum'
+        metadatas:
+          $ref: '#/components/schemas/Metadatas'
+        metadatasIndexes:
+          type: object
+
+    Provider:
+      type: object
+      required:
+        - name
+        - providerType
+        - providerState
+        - providerAuthType
+        - providerLocation
+      allOf:
+        - $ref: '#/components/schemas/ProviderBase'
+      properties:
+        clientId:
+          type: string
+          maxLength: 255
+          minLength: 3
+        clientSecret:
+          type: string
+          maxLength: 255
+          minLength: 3
+        redirectUri:
+          type: string
+          maxLength: 500
+        scopes:
+          type: string
+          maxLength: 255
+        tenantId:
+          type: string
+          maxLength: 500
+        apiKey:
+          type: string
+          maxLength: 500
+        impersonatedUserEmail:
+          type: string
+          maxLength: 100
+        driveId:
+          type: string
+          maxLength: 500
+        accessToken:
+          type: string
+          maxLength: 4000
+        accessTokenExpiredAt:
+          $ref: '#/components/schemas/DateTimeType'
+        isExpirableAccessToken:
+          $ref: '#/components/schemas/BooleanType'
+        refreshToken:
+          type: string
+          maxLength: 4000
+        refreshTokenExpiredAt:
+          $ref: '#/components/schemas/DateTimeType'
+        _links:
+          $ref: '#/components/schemas/ProviderLinks'
+
+    NativeProviderCreateRequest:
+      type: object
+      required:
+        - name
+        - providerType
+        - providerAuthType
+        - providerLocation
+      properties:
+        name:
+          type: string
+          maxLength: 255
+          minLength: 3
+        providerType:
+          $ref: '#/components/schemas/ProviderTypeEnum'
+        providerAuthType:
+          $ref: '#/components/schemas/ProviderAuthTypeEnum'
+        providerLocation:
+          $ref: '#/components/schemas/ProviderLocationEnum'
+        metadatas:
+          $ref: '#/components/schemas/Metadatas'
+
+    SharePointProviderCreateRequest:
+      type: object
+      required:
+        - name
+        - providerType
+        - providerState
+        - providerAuthType
+        - providerLocation
+        - clientId
+        - clientSecret
+        - redirectUri
+        - tenantId
+        - driveId
+      properties:
+        name:
+          type: string
+          maxLength: 255
+          minLength: 3
+        providerType:
+          $ref: '#/components/schemas/ProviderTypeEnum'
+        providerState:
+          $ref: '#/components/schemas/ProviderStateEnum'
+        providerAuthType:
+          $ref: '#/components/schemas/ProviderAuthTypeEnum'
+        providerLocation:
+          $ref: '#/components/schemas/ProviderLocationEnum'
+        clientId:
+          type: string
+          maxLength: 255
+          minLength: 3
+        clientSecret:
+          type: string
+          maxLength: 255
+          minLength: 3
+        redirectUri:
+          type: string
+          maxLength: 500
+        scopes:
+          type: string
+          maxLength: 255
+        tenantId:
+          type: string
+          maxLength: 500
+        driveId:
+          type: string
+          maxLength: 500
+        metadatas:
+          $ref: '#/components/schemas/Metadatas'
+
+    NativeProviderUpdateRequest:
+      type: object
+      required:
+        - name
+        - providerType
+        - providerAuthType
+        - providerLocation
+      properties:
+        name:
+          type: string
+          maxLength: 255
+          minLength: 3
+        providerType:
+          $ref: '#/components/schemas/ProviderTypeEnum'
+        providerAuthType:
+          $ref: '#/components/schemas/ProviderAuthTypeEnum'
+        providerLocation:
+          $ref: '#/components/schemas/ProviderLocationEnum'
+
+    SharePointProviderUpdateRequest:
+      type: object
+      required:
+        - name
+        - providerType
+        - providerState
+        - providerAuthType
+        - providerLocation
+        - clientId
+        - clientSecret
+        - redirectUri
+        - tenantId
+        - driveId
+      properties:
+        name:
+          type: string
+          maxLength: 255
+          minLength: 3
+        providerType:
+          $ref: '#/components/schemas/ProviderTypeEnum'
+        providerState:
+          $ref: '#/components/schemas/ProviderStateEnum'
+        providerAuthType:
+          $ref: '#/components/schemas/ProviderAuthTypeEnum'
+        providerLocation:
+          $ref: '#/components/schemas/ProviderLocationEnum'
+        clientId:
+          type: string
+          maxLength: 255
+          minLength: 3
+        clientSecret:
+          type: string
+          maxLength: 255
+          minLength: 3
+        redirectUri:
+          type: string
+          maxLength: 500
+        scopes:
+          type: string
+          maxLength: 255
+        tenantId:
+          type: string
+          maxLength: 500
+        driveId:
+          type: string
+          maxLength: 500
+        accessToken:
+          type: string
+          maxLength: 4000
+        isExpirableAccessToken:
+          $ref: '#/components/schemas/BooleanType'
+        refreshToken:
+          type: string
+          maxLength: 4000
+        refreshTokenExpiredAt:
+          $ref: '#/components/schemas/DateTimeType'
+
+    ###
+    # Domain schemas - Media
+    ###
+    Media:
+      type: object
+      required:
+        - entityUuid
+        - name
+        - mimeType
+        - size
+      allOf:
+        - $ref: '#/components/schemas/Uuid'
+        - $ref: '#/components/schemas/Timestamped'
+        - $ref: '#/components/schemas/Audited'
       properties:
         entityUuid:
           type: string
           maxLength: 300
-        userIp:
+        name:
           type: string
           maxLength: 255
-        userAgent:
+          minLength: 3
+        extension:
           type: string
-          maxLength: 500
-        headers:
+          maxLength: 30
+        mimeType:
+          type: string
+          maxLength: 255
+          minLength: 1
+        size:
+          $ref: '#/components/schemas/NumberType'
+        description:
+          type: string
+          maxLength: 255
+        metadatas:
+          $ref: '#/components/schemas/Metadatas'
+        metadatasIndexes:
+          type: object
+        _links:
+          $ref: '#/components/schemas/MediaLinks'
+        _embedded:
+          type: object
+          properties:
+            provider:
+              $ref: '#/components/schemas/Provider'
+          readOnly: true
+
+    MediaCreateRequest:
+      type: object
+      required:
+        - entityUuid
+        - file
+        - providerUuid
+        - providerPath
+      properties:
+        entityUuid:
+          type: string
+          maxLength: 300
+        file:
+          type: string
+          format: binary
+        providerUuid:
           type: string
           maxLength: 1000
-        method:
-          $ref: '#/components/schemas/HttpMethodEnum'
-        content:
-          type: string
-          maxLength: 2000
-        url:
-          type: string
-          maxLength: 500
-        referrer:
-          type: string
-          maxLength: 500
-        author:
-          type: string
-          maxLength: 255
-        sameRequestOccurenceRange:
-          type: array
-          items:
-            $ref: '#/components/schemas/IntegerType'
-        sameRequestPeriodRange:
-          type: array
-          items:
-            $ref: '#/components/schemas/IntegerType'
-        sameUserOccurenceRange:
-          type: array
-          items:
-            $ref: '#/components/schemas/IntegerType'
-        sameUserPeriodRange:
-          type: array
-          items:
-            $ref: '#/components/schemas/IntegerType'
-        metadatas:
-          $ref: '#/components/schemas/Metadatas'
-        metadatasIndexes:
-          type: object
-        _links:
-          $ref: '#/components/schemas/ResourceLinks'
-
-    RequestCheckCreateRequest:
-      type: object
-      required:
-        - content
-        - url
-      properties:
-        entityUuid:
-          type: string
-          maxLength: 300
-        userIp:
-          type: string
-          maxLength: 255
-        userAgent:
-          type: string
-          maxLength: 500
-        headers:
+        providerPath:
           type: string
           maxLength: 1000
-        method:
-          $ref: '#/components/schemas/HttpMethodEnum'
-        content:
-          type: string
-          maxLength: 2000
-        url:
-          type: string
-          maxLength: 500
-        referrer:
-          type: string
-          maxLength: 500
-        author:
+        description:
           type: string
           maxLength: 255
-        sameRequestOccurenceRange:
-          type: array
-          items:
-            $ref: '#/components/schemas/IntegerType'
-        sameRequestPeriodRange:
-          type: array
-          items:
-            $ref: '#/components/schemas/IntegerType'
-        sameUserOccurenceRange:
-          type: array
-          items:
-            $ref: '#/components/schemas/IntegerType'
-        sameUserPeriodRange:
-          type: array
-          items:
-            $ref: '#/components/schemas/IntegerType'
         metadatas:
           $ref: '#/components/schemas/Metadatas'
 
-    RequestSpam:
+    MediaUpdateRequest:
       type: object
-      required:
-        - userIp
-        - url
-        - enabled
-      allOf:
-        - $ref: '#/components/schemas/Uuid'
-        - $ref: '#/components/schemas/Timestamped'
-        - $ref: '#/components/schemas/ExpiredAt'
       properties:
         entityUuid:
           type: string
           maxLength: 300
-        userIp:
+        name:
           type: string
           maxLength: 255
-        userAgent:
+          minLength: 3
+        extension:
           type: string
-          maxLength: 500
-        method:
-          $ref: '#/components/schemas/HttpMethodEnum'
-        content:
+          maxLength: 30
+        mimeType:
           type: string
-          maxLength: 2000
-        url:
+          maxLength: 255
+          minLength: 1
+        size:
+          $ref: '#/components/schemas/NumberType'
+        providerUuid:
           type: string
-          maxLength: 2000
-        referrer:
+          maxLength: 1000
+        providerPath:
           type: string
-          maxLength: 500
-        enabled:
-          $ref: '#/components/schemas/BooleanType'
-        expiredInSeconds:
-          $ref: '#/components/schemas/IntegerType'
-        metadatas:
-          $ref: '#/components/schemas/Metadatas'
-        metadatasIndexes:
-          type: object
-        _links:
-          $ref: '#/components/schemas/ResourceLinks'
+          maxLength: 1000
+        description:
+          type: string
+          maxLength: 255
 
-    UserSpam:
+    MediaImportRequest:
       type: object
       required:
-        - userIp
-        - enabled
-      allOf:
-        - $ref: '#/components/schemas/Uuid'
-        - $ref: '#/components/schemas/Timestamped'
-        - $ref: '#/components/schemas/ExpiredAt'
+        - entityUuid
+        - name
+        - mimeType
+        - size
+        - providerUuid
+        - providerPath
       properties:
         entityUuid:
           type: string
           maxLength: 300
-        userIp:
+        name:
           type: string
           maxLength: 255
-        author:
+          minLength: 3
+        extension:
+          type: string
+          maxLength: 30
+        mimeType:
           type: string
           maxLength: 255
-        method:
-          $ref: '#/components/schemas/HttpMethodEnum'
-        enabled:
-          $ref: '#/components/schemas/BooleanType'
-        expiredInSeconds:
-          $ref: '#/components/schemas/IntegerType'
+          minLength: 1
+        size:
+          $ref: '#/components/schemas/NumberType'
+        providerUuid:
+          type: string
+          maxLength: 1000
+        providerPath:
+          type: string
+          maxLength: 1000
+        description:
+          type: string
+          maxLength: 255
         metadatas:
           $ref: '#/components/schemas/Metadatas'
-        metadatasIndexes:
-          type: object
-        _links:
-          $ref: '#/components/schemas/ResourceLinks'
 
     ###
     # Paginated representations
     ###
-    RequestCheckPaginatedRepresentation:
+    MediaPaginatedRepresentation:
       allOf:
         - $ref: '#/components/schemas/PaginatedRepresentation'
         - type: object
@@ -833,9 +1228,9 @@ components:
                 items:
                   type: array
                   items:
-                    $ref: '#/components/schemas/RequestCheck'
+                    $ref: '#/components/schemas/Media'
 
-    RequestSpamPaginatedRepresentation:
+    ProviderPaginatedRepresentation:
       allOf:
         - $ref: '#/components/schemas/PaginatedRepresentation'
         - type: object
@@ -846,20 +1241,7 @@ components:
                 items:
                   type: array
                   items:
-                    $ref: '#/components/schemas/RequestSpam'
-
-    UserSpamPaginatedRepresentation:
-      allOf:
-        - $ref: '#/components/schemas/PaginatedRepresentation'
-        - type: object
-          properties:
-            _embedded:
-              type: object
-              properties:
-                items:
-                  type: array
-                  items:
-                    $ref: '#/components/schemas/UserSpam'
+                    $ref: '#/components/schemas/Provider'
 
     ###
     # Errors
