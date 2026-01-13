@@ -1,0 +1,5 @@
+1 - J’aimerais que tu parcours le contrat d’interface qui se trouve dans le répertoire suivant :
+
+ui/src/main/resources/openapi.yml 
+
+et que tu listes les entités triées dans l’ordre de dépendance. Tu commences par ceux qui dépendent d’aucune autre entités jusqu’à ceux qui dépendent des autres

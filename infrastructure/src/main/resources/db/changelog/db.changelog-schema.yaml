@@ -1,0 +1,246 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1-create-request-check-table
+      author: boilerplate
+      changes:
+        - createTable:
+            tableName: request_check
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: uuid
+                  type: uuid
+                  constraints:
+                    unique: true
+                    nullable: false
+              - column:
+                  name: entity_uuid
+                  type: varchar(300)
+              - column:
+                  name: user_ip
+                  type: varchar(255)
+              - column:
+                  name: user_agent
+                  type: varchar(500)
+              - column:
+                  name: headers
+                  type: text
+              - column:
+                  name: method
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: content
+                  type: varchar(2000)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: url
+                  type: varchar(500)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: referrer
+                  type: varchar(500)
+              - column:
+                  name: author
+                  type: varchar(255)
+              - column:
+                  name: same_request_occurence_range
+                  type: jsonb
+              - column:
+                  name: same_request_period_range
+                  type: jsonb
+              - column:
+                  name: same_user_occurence_range
+                  type: jsonb
+              - column:
+                  name: same_user_period_range
+                  type: jsonb
+              - column:
+                  name: metadatas
+                  type: jsonb
+              - column:
+                  name: created_at
+                  type: timestamp
+                  defaultValueComputed: CURRENT_TIMESTAMP
+              - column:
+                  name: updated_at
+                  type: timestamp
+              - column:
+                  name: deleted_at
+                  type: timestamp
+
+  - changeSet:
+      id: 2-create-request-spam-table
+      author: boilerplate
+      changes:
+        - createTable:
+            tableName: request_spam
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: uuid
+                  type: uuid
+                  constraints:
+                    unique: true
+                    nullable: false
+              - column:
+                  name: entity_uuid
+                  type: varchar(300)
+              - column:
+                  name: user_ip
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: user_agent
+                  type: varchar(500)
+              - column:
+                  name: headers
+                  type: text
+              - column:
+                  name: method
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: content
+                  type: varchar(2000)
+              - column:
+                  name: url
+                  type: varchar(500)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: referrer
+                  type: varchar(500)
+              - column:
+                  name: enabled
+                  type: boolean
+                  constraints:
+                    nullable: false
+              - column:
+                  name: expired_at
+                  type: timestamp
+              - column:
+                  name: expired_in_seconds
+                  type: integer
+              - column:
+                  name: metadatas
+                  type: jsonb
+              - column:
+                  name: created_at
+                  type: timestamp
+                  defaultValueComputed: CURRENT_TIMESTAMP
+              - column:
+                  name: updated_at
+                  type: timestamp
+              - column:
+                  name: deleted_at
+                  type: timestamp
+
+  - changeSet:
+      id: 3-create-user-spam-table
+      author: boilerplate
+      changes:
+        - createTable:
+            tableName: user_spam
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: uuid
+                  type: uuid
+                  constraints:
+                    unique: true
+                    nullable: false
+              - column:
+                  name: entity_uuid
+                  type: varchar(300)
+              - column:
+                  name: user_ip
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: user_agent
+                  type: varchar(500)
+              - column:
+                  name: headers
+                  type: text
+              - column:
+                  name: method
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: author
+                  type: varchar(255)
+              - column:
+                  name: enabled
+                  type: boolean
+                  constraints:
+                    nullable: false
+              - column:
+                  name: expired_at
+                  type: timestamp
+              - column:
+                  name: expired_in_seconds
+                  type: integer
+              - column:
+                  name: metadatas
+                  type: jsonb
+              - column:
+                  name: created_at
+                  type: timestamp
+                  defaultValueComputed: CURRENT_TIMESTAMP
+              - column:
+                  name: updated_at
+                  type: timestamp
+              - column:
+                  name: deleted_at
+                  type: timestamp
+
+  - changeSet:
+      id: 4-create-indexes
+      author: boilerplate
+      changes:
+        - createIndex:
+            indexName: idx_request_check_uuid
+            tableName: request_check
+            columns:
+              - column:
+                  name: uuid
+        - createIndex:
+            indexName: idx_request_spam_url_content
+            tableName: request_spam
+            columns:
+              - column:
+                  name: url
+              - column:
+                  name: content
+        - createIndex:
+            indexName: idx_user_spam_user_ip
+            tableName: user_spam
+            columns:
+              - column:
+                  name: user_ip

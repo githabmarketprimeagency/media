@@ -1,0 +1,36 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "mvnw clean install",
+      "type": "shell",
+      "command": "bash",
+      "args": ["-lc", "./mvnw clean install"],
+      "problemMatcher": ["$javac"],
+      "group": "build"
+    },
+    {
+      "label": "spring-boot:run (debug detached)",
+      "type": "shell",
+      "command": "bash",
+      "args": [
+        "-lc",
+        "mkdir -p .vscode && nohup ./mvnw -pl infrastructure spring-boot:run -Dspring-boot.run.profiles=h2 -Dspring-boot.run.jvmArguments=\"-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005\" > .vscode/spring-boot-debug.log 2>&1 & echo $! > .vscode/spring-boot-debug.pid"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "wait 20s",
+      "type": "shell",
+      "command": "bash",
+      "args": ["-lc", "sleep 20"],
+      "problemMatcher": []
+    },
+    {
+      "label": "build_and_run_spring_boot_app",
+      "dependsOn": ["mvnw clean install", "spring-boot:run (debug detached)", "wait 10s"],
+      "dependsOrder": "sequence",
+      "problemMatcher": []
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+- 2 - Je veux que tu développe toutes les couches nécessaires afin que les endpoints « /$endpoints soient développés et fonctionnels prêts à l’emploi.
+
+Je veux que tu prennes en exemple l’entité requestchek dont les fichiers se trouvent dans ces fichiers / dossiers :
+
+DOMAIN :
+
+- domain/src/main/java/com/microservice/boilerplate/domain/model/RequestCheck.java
+- domain/src/main/java/com/microservice/boilerplate/domain/repository/RequestCheckRepository.java
+- domain/src/main/java/com/microservice/boilerplate/domain/model/pagination/RequestCheckPaginatedRepresentation.java
+
+INFRASTRUCTURE :
+
+- infrastructure/src/main/java/com/microservice/boilerplate/infrastructure/config/RequestCheckConfig.java
+- infrastructure/src/main/java/com/microservice/boilerplate/infrastructure/gateway/RequestCheckGateway.java
+- infrastructure/src/main/java/com/microservice/boilerplate/infrastructure/mapper/RequestCheckMapper.java
+- infrastructure/src/main/java/com/microservice/boilerplate/infrastructure/mapper/hateoas/requestcheck/RequestCheckAssembler.java
+- infrastructure/src/main/java/com/microservice/boilerplate/infrastructure/mapper/hateoas/requestcheck/RequestCheckAssemblerMapper.java
+- infrastructure/src/main/java/com/microservice/boilerplate/infrastructure/mapper/hateoas/requestcheck/RequestCheckModelAssembler.java
+- infrastructure/src/main/java/com/microservice/boilerplate/infrastructure/mapper/hateoas/requestcheck/RequestCheckPaginatedAssemblerMapper.java
+- infrastructure/src/main/java/com/microservice/boilerplate/infrastructure/model/RequestCheckEntity.java
+- infrastructure/src/main/java/com/microservice/boilerplate/infrastructure/repository/RequestCheckRepository.java
+
+UI :
+
+- ui/src/main/java/com/microservice/boilerplate/ui/mapper/requestcheck/CreateRequestCheckMapper.java
+- ui/src/main/java/com/microservice/boilerplate/ui/mapper/requestcheck/RequestCheckMapper.java
+- ui/src/main/java/com/microservice/boilerplate/ui/presenter/RequestCheckPresenterImpl.java
+
+USE CASE :
+
+- usecase/src/main/java/com/microservice/boilerplate/usecase/requestcheck/CountRequestChecksUseCase.java
+- usecase/src/main/java/com/microservice/boilerplate/usecase/requestcheck/CreateOneRequestCheckUseCase.java
+- usecase/src/main/java/com/microservice/boilerplate/usecase/requestcheck/DeleteOneRequestCheckUseCase.java
+- usecase/src/main/java/com/microservice/boilerplate/usecase/requestcheck/FindRequestChecksUseCase.java
+- usecase/src/main/java/com/microservice/boilerplate/usecase/requestcheck/GetOneRequestCheckUseCase.java
+- usecase/src/main/java/com/microservice/boilerplate/usecase/requestcheck
+- usecase/src/main/java/com/microservice/boilerplate/usecase/service
+
+PS 1 : Mets à jour le fichier de migration liquidbase afin qu'il reflete les tables créées
+
+infrastructure/src/main/resources/db/changelog/db.changelog-main.yaml
+
+Et fournit dans cette migration un jeu de données pour toutes les entités existantes
+
+Utilises la syntaxe Liquibase YAML et non du SQL brut pour les requêtes pour maximiser la compatibilité
+
+entre les différents SGBD.
+
+Dans les jeux de données, il faut utiliser le format YYYY-MM-DD HH:MM:SS qui est compatible avec les differents SGBD
+
+PS 2 : Je ne veux pas que tu essaye d'assigner les valeurs de uuid, createdAt ou updatedAt car les classes dédiées le font deja
+
+PS 3 : J’aimerais développer tous les endpoints en se basant sur les normes de ces exemples.
+Evidemment si certains endpoints identifiés dans le contrat d’interface ne cadrent pas avec ces fonctionnalités existantes, développe-les.
+
+PS 4 : Si sur une entité tu dois mettre un attribut nommé metadatasIndexes, son type est forcément Object.
+
+PS 5 : Je souhaites que tu privilégie systématiquement l'utilisation de OffsetDateTime lorsqu'il s'agit de manipuler des dates.
+
+PS 6 : Lorsqu'un endpoint est censé retourner un fichier, utilises le classe org.springframework.core.io.Resource pour représenter le fichier en retour.
+
+PS 7 : Je ne veux pas que tu modifies le contrat d'interface du projet ui/src/main/resources/openapi.yml

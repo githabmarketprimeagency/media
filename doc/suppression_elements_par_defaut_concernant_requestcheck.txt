@@ -1,0 +1,4 @@
+Je veux que tu supprimes (dossiers et fichiers) :
+
+- tout ce qui est relatif à l'entité requestcheck du projet 
+- tout ce qui est en rapport avec des spams

@@ -1,0 +1,10 @@
+logging:
+  level:
+    org.springframework:
+      web: DEBUG
+
+spring:
+  application:
+    name: Boilerplate
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-main.yaml

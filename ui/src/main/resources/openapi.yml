@@ -1,0 +1,892 @@
+openapi: 3.0.0
+info:
+  title: Boilerplate
+  description: ' <b>TECHNICAL SPECS</b> :<br/><br/> * EQUAL OPERATOR : If you provide any value, by default the endpoints will filter data using EQUAL operator (strict).<br/><br/> _Example of values : Mateo | 1<br/><br/> * LIKE OPERATOR : If you provide any integer, numeric or date-time value starting and or ending with percentage sign %, the endpoints will filter data using LIKE operator (non strict).<br/><br/> _Examples values :  %Mateo% | %Mateo | Mateo%<br/><br/> * OR OPERATOR : If you provide any value starting and ending by square brackets sign [] , the endpoints will filter using OR OPERATOR.<br/><br/> _Examples values :  [Mateo,John,Jane] | [1,2,3]'
+  version: 1.0.0
+
+paths:
+  /request-checks:
+    get:
+      tags:
+        - Request Check
+      summary: Search request checks by criteria.
+      operationId: findRequestChecks
+      parameters:
+        - in: query
+          name: criteria
+          schema:
+            $ref: '#/components/schemas/FindRequestChecksCriteria'
+          style: form
+          explode: true
+      responses:
+        '200':
+          description: Returns the list of request checks.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RequestCheckPaginatedRepresentation'
+        '500':
+          description: A server error has occurred.
+    post:
+      tags:
+        - Request Check
+      summary: Create a request check.
+      operationId: createOneRequestCheck
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RequestCheckCreateRequest'
+      responses:
+        '201':
+          description: Returns the result of the check (spam or not).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResultCheck'
+        '400':
+          description: Data validation failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConstraintValidationErrors'
+        '500':
+          description: A server error has occurred.
+
+  /request-checks/count:
+    get:
+      tags:
+        - Request Check
+      summary: Count request checks by criteria.
+      operationId: countRequestChecks
+      parameters:
+        - in: query
+          name: criteria
+          schema:
+            $ref: '#/components/schemas/CountRequestChecksCriteria'
+          style: form
+          explode: true
+      responses:
+        '200':
+          description: Returns the number of request checks.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegerType'
+              example: 10
+        '500':
+          description: A server error has occurred.
+
+  /request-checks/{uuid}:
+    get:
+      tags:
+        - Request Check
+      summary: Retrieve a request check.
+      operationId: getOneRequestCheck
+      parameters:
+        - $ref: '#/components/parameters/PathUuid'
+      responses:
+        '200':
+          description: Returns a request check.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RequestCheck'
+        '500':
+          description: A server error has occurred.
+    delete:
+      tags:
+        - Request Check
+      summary: Delete a request check.
+      operationId: deleteOneRequestCheck
+      parameters:
+        - $ref: '#/components/parameters/PathUuid'
+      responses:
+        '204':
+          description: The request check has been deleted.
+        '500':
+          description: A server error has occurred.
+
+  /request-spams:
+    get:
+      tags:
+        - Request Spam
+      summary: Search request spams by criteria.
+      operationId: findRequestSpams
+      parameters:
+        - in: query
+          name: criteria
+          schema:
+            $ref: '#/components/schemas/FindRequestSpamsCriteria'
+          style: form
+          explode: true
+      responses:
+        '200':
+          description: Returns the list of request spams.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RequestSpamPaginatedRepresentation'
+        '500':
+          description: A server error has occurred.
+
+  /request-spams/count:
+    get:
+      tags:
+        - Request Spam
+      summary: Count request spams by criteria.
+      operationId: countRequestSpams
+      parameters:
+        - in: query
+          name: criteria
+          schema:
+            $ref: '#/components/schemas/CountRequestSpamsCriteria'
+          style: form
+          explode: true
+      responses:
+        '200':
+          description: Returns the number of request spams.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegerType'
+              example: 10
+        '500':
+          description: A server error has occurred.
+
+  /request-spams/{uuid}:
+    get:
+      tags:
+        - Request Spam
+      summary: Retrieve a request spam.
+      operationId: getOneRequestSpam
+      parameters:
+        - $ref: '#/components/parameters/PathUuid'
+      responses:
+        '200':
+          description: Returns a request spam.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RequestSpam'
+        '500':
+          description: A server error has occurred.
+    delete:
+      tags:
+        - Request Spam
+      summary: Delete a request spam.
+      operationId: deleteOneRequestSpam
+      parameters:
+        - $ref: '#/components/parameters/PathUuid'
+      responses:
+        '204':
+          description: The request spam has been deleted.
+        '500':
+          description: A server error has occurred.
+
+  /user-spams:
+    get:
+      tags:
+        - User Spam
+      summary: Search user spams by criteria.
+      operationId: findUserSpams
+      parameters:
+        - in: query
+          name: criteria
+          schema:
+            $ref: '#/components/schemas/FindUserSpamsCriteria'
+          style: form
+          explode: true
+      responses:
+        '200':
+          description: Returns the list of user spams.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserSpamPaginatedRepresentation'
+        '500':
+          description: A server error has occurred.
+
+  /user-spams/count:
+    get:
+      tags:
+        - User Spam
+      summary: Count user spams by criteria.
+      operationId: countUserSpams
+      parameters:
+        - in: query
+          name: criteria
+          schema:
+            $ref: '#/components/schemas/CountUserSpamsCriteria'
+          style: form
+          explode: true
+      responses:
+        '200':
+          description: Returns the number of user spams.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegerType'
+              example: 10
+        '500':
+          description: A server error has occurred.
+
+  /user-spams/{uuid}:
+    get:
+      tags:
+        - User Spam
+      summary: Retrieve a user spam.
+      operationId: getOneUserSpam
+      parameters:
+        - $ref: '#/components/parameters/PathUuid'
+      responses:
+        '200':
+          description: Returns a user spam.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserSpam'
+        '500':
+          description: A server error has occurred.
+    delete:
+      tags:
+        - User Spam
+      summary: Delete a user spam.
+      operationId: deleteOneUserSpam
+      parameters:
+        - $ref: '#/components/parameters/PathUuid'
+      responses:
+        '204':
+          description: The user spam has been deleted.
+        '500':
+          description: A server error has occurred.
+
+components:
+  schemas:
+    ###
+    # Common types
+    ###
+    UUIDType:
+      type: string
+      format: uuid
+      description: |
+        Represents an UUID v4 string, that can be used as a resource identifier.
+
+    DateTimeType:
+      type: string
+      format: date-time
+      description: |
+        Represents a RFC3339 date-time string.
+
+    StringType:
+      type: string
+      description: |
+        Represents a string.
+
+    IntegerType:
+      type: integer
+      format: int32
+      minimum: 0
+      default: 0
+      description: |
+        Represents a number.
+
+    BooleanType:
+      type: boolean
+      description: |
+        Represents a boolean.
+
+    HttpMethodEnum:
+      type: string
+      enum: [GET, POST, PUT, PATCH, DELETE]
+      description: HTTP method.
+
+    ###
+    # Common objects
+    ###
+    Uuid:
+      type: object
+      properties:
+        uuid:
+          $ref: '#/components/schemas/UUIDType'
+
+    CreatedAt:
+      type: object
+      properties:
+        createdAt:
+          $ref: '#/components/schemas/DateTimeType'
+
+    UpdatedAt:
+      type: object
+      properties:
+        updatedAt:
+          $ref: '#/components/schemas/DateTimeType'
+
+    DeletedAt:
+      type: object
+      properties:
+        deletedAt:
+          $ref: '#/components/schemas/DateTimeType'
+
+    ExpiredAt:
+      type: object
+      properties:
+        expiredAt:
+          $ref: '#/components/schemas/DateTimeType'
+
+    Timestamped:
+      allOf:
+        - $ref: '#/components/schemas/CreatedAt'
+        - $ref: '#/components/schemas/UpdatedAt'
+        - $ref: '#/components/schemas/DeletedAt'
+
+    HateoasLink:
+      type: object
+      properties:
+        href:
+          type: string
+
+    ResourceLinks:
+      type: object
+      properties:
+        self:
+          $ref: '#/components/schemas/HateoasLink'
+        delete:
+          $ref: '#/components/schemas/HateoasLink'
+      readOnly: true
+
+    PaginatedRepresentationLinks:
+      type: object
+      properties:
+        self:
+          $ref: '#/components/schemas/HateoasLink'
+        first:
+          $ref: '#/components/schemas/HateoasLink'
+        last:
+          $ref: '#/components/schemas/HateoasLink'
+        next:
+          $ref: '#/components/schemas/HateoasLink'
+        previous:
+          $ref: '#/components/schemas/HateoasLink'
+      readOnly: true
+
+    PaginatedRepresentation:
+      type: object
+      properties:
+        pageNumber:
+          type: integer
+        pageSize:
+          type: integer
+        totalPages:
+          type: integer
+        total:
+          type: integer
+        _embedded:
+          type: object
+          properties:
+            items:
+              type: array
+              items:
+                oneOf: []
+        _links:
+          $ref: '#/components/schemas/PaginatedRepresentationLinks'
+
+    ###
+    # Metadatas
+    ###
+    Metadata:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/StringType'
+        value:
+          $ref: '#/components/schemas/StringType'
+
+    Metadatas:
+      type: array
+      items:
+        $ref: '#/components/schemas/Metadata'
+
+    ###
+    # Search criteria common blocks
+    ###
+    CreatedAtMin:
+      type: object
+      properties:
+        createdAtMin:
+          $ref: '#/components/schemas/DateTimeType'
+
+    CreatedAtMax:
+      type: object
+      properties:
+        createdAtMax:
+          $ref: '#/components/schemas/DateTimeType'
+
+    UpdatedAtMin:
+      type: object
+      properties:
+        updatedAtMin:
+          $ref: '#/components/schemas/DateTimeType'
+
+    UpdatedAtMax:
+      type: object
+      properties:
+        updatedAtMax:
+          $ref: '#/components/schemas/DateTimeType'
+
+    DeletedAtMin:
+      type: object
+      properties:
+        deletedAtMin:
+          $ref: '#/components/schemas/DateTimeType'
+
+    DeletedAtMax:
+      type: object
+      properties:
+        deletedAtMax:
+          $ref: '#/components/schemas/DateTimeType'
+
+    ExpiredAtMin:
+      type: object
+      properties:
+        expiredAtMin:
+          $ref: '#/components/schemas/DateTimeType'
+
+    ExpiredAtMax:
+      type: object
+      properties:
+        expiredAtMax:
+          $ref: '#/components/schemas/DateTimeType'
+
+    PageNumber:
+      type: object
+      properties:
+        pageNumber:
+          $ref: '#/components/schemas/IntegerType'
+      description: Page number
+
+    PageSize:
+      type: object
+      properties:
+        pageSize:
+          $ref: '#/components/schemas/IntegerType'
+      description: Number of items in a page
+
+    OrderBy:
+      type: object
+      properties:
+        orderBy:
+          type: string
+          default: createdAt:ASC
+      description: Sort order. Default => createdAt:ASC|id:DESC
+
+    ###
+    # Criteria (Request Check)
+    ###
+    RequestChecksCriteriaBase:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/Uuid'
+        - $ref: '#/components/schemas/CreatedAtMin'
+        - $ref: '#/components/schemas/CreatedAtMax'
+        - $ref: '#/components/schemas/UpdatedAtMin'
+        - $ref: '#/components/schemas/UpdatedAtMax'
+        - $ref: '#/components/schemas/DeletedAtMin'
+        - $ref: '#/components/schemas/DeletedAtMax'
+      properties:
+        entityUuid:
+          $ref: '#/components/schemas/StringType'
+          description: '[uuid]'
+        userIp:
+          $ref: '#/components/schemas/StringType'
+        userAgent:
+          $ref: '#/components/schemas/StringType'
+        method:
+          $ref: '#/components/schemas/HttpMethodEnum'
+        content:
+          $ref: '#/components/schemas/StringType'
+        url:
+          $ref: '#/components/schemas/StringType'
+        referrer:
+          $ref: '#/components/schemas/StringType'
+        author:
+          $ref: '#/components/schemas/StringType'
+        metadatas:
+          $ref: '#/components/schemas/StringType'
+          description: Free-text metadata filter (implementation-defined).
+
+    FindRequestChecksCriteria:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/RequestChecksCriteriaBase'
+        - $ref: '#/components/schemas/PageNumber'
+        - $ref: '#/components/schemas/PageSize'
+        - $ref: '#/components/schemas/OrderBy'
+
+    CountRequestChecksCriteria:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/RequestChecksCriteriaBase'
+
+    ###
+    # Criteria (Request Spam)
+    ###
+    RequestSpamsCriteriaBase:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/Uuid'
+        - $ref: '#/components/schemas/ExpiredAtMin'
+        - $ref: '#/components/schemas/ExpiredAtMax'
+        - $ref: '#/components/schemas/CreatedAtMin'
+        - $ref: '#/components/schemas/CreatedAtMax'
+        - $ref: '#/components/schemas/UpdatedAtMin'
+        - $ref: '#/components/schemas/UpdatedAtMax'
+        - $ref: '#/components/schemas/DeletedAtMin'
+        - $ref: '#/components/schemas/DeletedAtMax'
+      properties:
+        entityUuid:
+          $ref: '#/components/schemas/StringType'
+          description: '[uuid]'
+        userIp:
+          $ref: '#/components/schemas/StringType'
+        userAgent:
+          $ref: '#/components/schemas/StringType'
+        method:
+          $ref: '#/components/schemas/HttpMethodEnum'
+        content:
+          $ref: '#/components/schemas/StringType'
+        url:
+          $ref: '#/components/schemas/StringType'
+        referrer:
+          $ref: '#/components/schemas/StringType'
+        enabled:
+          $ref: '#/components/schemas/BooleanType'
+        expiredInSeconds:
+          $ref: '#/components/schemas/IntegerType'
+        metadatas:
+          $ref: '#/components/schemas/StringType'
+          description: Free-text metadata filter (implementation-defined).
+
+    FindRequestSpamsCriteria:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/RequestSpamsCriteriaBase'
+        - $ref: '#/components/schemas/PageNumber'
+        - $ref: '#/components/schemas/PageSize'
+        - $ref: '#/components/schemas/OrderBy'
+
+    CountRequestSpamsCriteria:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/RequestSpamsCriteriaBase'
+
+    ###
+    # Criteria (User Spam)
+    ###
+    UserSpamsCriteriaBase:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/Uuid'
+        - $ref: '#/components/schemas/ExpiredAtMin'
+        - $ref: '#/components/schemas/ExpiredAtMax'
+        - $ref: '#/components/schemas/CreatedAtMin'
+        - $ref: '#/components/schemas/CreatedAtMax'
+        - $ref: '#/components/schemas/UpdatedAtMin'
+        - $ref: '#/components/schemas/UpdatedAtMax'
+        - $ref: '#/components/schemas/DeletedAtMin'
+        - $ref: '#/components/schemas/DeletedAtMax'
+      properties:
+        entityUuid:
+          $ref: '#/components/schemas/StringType'
+          description: '[uuid]'
+        userIp:
+          $ref: '#/components/schemas/StringType'
+        author:
+          $ref: '#/components/schemas/StringType'
+        method:
+          $ref: '#/components/schemas/HttpMethodEnum'
+        enabled:
+          $ref: '#/components/schemas/BooleanType'
+        expiredInSeconds:
+          $ref: '#/components/schemas/IntegerType'
+        metadatas:
+          $ref: '#/components/schemas/StringType'
+          description: Free-text metadata filter (implementation-defined).
+
+    FindUserSpamsCriteria:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/UserSpamsCriteriaBase'
+        - $ref: '#/components/schemas/PageNumber'
+        - $ref: '#/components/schemas/PageSize'
+        - $ref: '#/components/schemas/OrderBy'
+
+    CountUserSpamsCriteria:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/UserSpamsCriteriaBase'
+
+    ###
+    # Domain schemas
+    ###
+    ResultCheck:
+      type: object
+      properties:
+        isSpam:
+          $ref: '#/components/schemas/BooleanType'
+
+    RequestCheck:
+      type: object
+      required:
+        - content
+        - url
+      allOf:
+        - $ref: '#/components/schemas/Uuid'
+        - $ref: '#/components/schemas/Timestamped'
+      properties:
+        entityUuid:
+          type: string
+          maxLength: 300
+        userIp:
+          type: string
+          maxLength: 255
+        userAgent:
+          type: string
+          maxLength: 500
+        headers:
+          type: string
+          maxLength: 1000
+        method:
+          $ref: '#/components/schemas/HttpMethodEnum'
+        content:
+          type: string
+          maxLength: 2000
+        url:
+          type: string
+          maxLength: 500
+        referrer:
+          type: string
+          maxLength: 500
+        author:
+          type: string
+          maxLength: 255
+        sameRequestOccurenceRange:
+          type: array
+          items:
+            $ref: '#/components/schemas/IntegerType'
+        sameRequestPeriodRange:
+          type: array
+          items:
+            $ref: '#/components/schemas/IntegerType'
+        sameUserOccurenceRange:
+          type: array
+          items:
+            $ref: '#/components/schemas/IntegerType'
+        sameUserPeriodRange:
+          type: array
+          items:
+            $ref: '#/components/schemas/IntegerType'
+        metadatas:
+          $ref: '#/components/schemas/Metadatas'
+        metadatasIndexes:
+          type: object
+        _links:
+          $ref: '#/components/schemas/ResourceLinks'
+
+    RequestCheckCreateRequest:
+      type: object
+      required:
+        - content
+        - url
+      properties:
+        entityUuid:
+          type: string
+          maxLength: 300
+        userIp:
+          type: string
+          maxLength: 255
+        userAgent:
+          type: string
+          maxLength: 500
+        headers:
+          type: string
+          maxLength: 1000
+        method:
+          $ref: '#/components/schemas/HttpMethodEnum'
+        content:
+          type: string
+          maxLength: 2000
+        url:
+          type: string
+          maxLength: 500
+        referrer:
+          type: string
+          maxLength: 500
+        author:
+          type: string
+          maxLength: 255
+        sameRequestOccurenceRange:
+          type: array
+          items:
+            $ref: '#/components/schemas/IntegerType'
+        sameRequestPeriodRange:
+          type: array
+          items:
+            $ref: '#/components/schemas/IntegerType'
+        sameUserOccurenceRange:
+          type: array
+          items:
+            $ref: '#/components/schemas/IntegerType'
+        sameUserPeriodRange:
+          type: array
+          items:
+            $ref: '#/components/schemas/IntegerType'
+        metadatas:
+          $ref: '#/components/schemas/Metadatas'
+
+    RequestSpam:
+      type: object
+      required:
+        - userIp
+        - url
+        - enabled
+      allOf:
+        - $ref: '#/components/schemas/Uuid'
+        - $ref: '#/components/schemas/Timestamped'
+        - $ref: '#/components/schemas/ExpiredAt'
+      properties:
+        entityUuid:
+          type: string
+          maxLength: 300
+        userIp:
+          type: string
+          maxLength: 255
+        userAgent:
+          type: string
+          maxLength: 500
+        method:
+          $ref: '#/components/schemas/HttpMethodEnum'
+        content:
+          type: string
+          maxLength: 2000
+        url:
+          type: string
+          maxLength: 2000
+        referrer:
+          type: string
+          maxLength: 500
+        enabled:
+          $ref: '#/components/schemas/BooleanType'
+        expiredInSeconds:
+          $ref: '#/components/schemas/IntegerType'
+        metadatas:
+          $ref: '#/components/schemas/Metadatas'
+        metadatasIndexes:
+          type: object
+        _links:
+          $ref: '#/components/schemas/ResourceLinks'
+
+    UserSpam:
+      type: object
+      required:
+        - userIp
+        - enabled
+      allOf:
+        - $ref: '#/components/schemas/Uuid'
+        - $ref: '#/components/schemas/Timestamped'
+        - $ref: '#/components/schemas/ExpiredAt'
+      properties:
+        entityUuid:
+          type: string
+          maxLength: 300
+        userIp:
+          type: string
+          maxLength: 255
+        author:
+          type: string
+          maxLength: 255
+        method:
+          $ref: '#/components/schemas/HttpMethodEnum'
+        enabled:
+          $ref: '#/components/schemas/BooleanType'
+        expiredInSeconds:
+          $ref: '#/components/schemas/IntegerType'
+        metadatas:
+          $ref: '#/components/schemas/Metadatas'
+        metadatasIndexes:
+          type: object
+        _links:
+          $ref: '#/components/schemas/ResourceLinks'
+
+    ###
+    # Paginated representations
+    ###
+    RequestCheckPaginatedRepresentation:
+      allOf:
+        - $ref: '#/components/schemas/PaginatedRepresentation'
+        - type: object
+          properties:
+            _embedded:
+              type: object
+              properties:
+                items:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/RequestCheck'
+
+    RequestSpamPaginatedRepresentation:
+      allOf:
+        - $ref: '#/components/schemas/PaginatedRepresentation'
+        - type: object
+          properties:
+            _embedded:
+              type: object
+              properties:
+                items:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/RequestSpam'
+
+    UserSpamPaginatedRepresentation:
+      allOf:
+        - $ref: '#/components/schemas/PaginatedRepresentation'
+        - type: object
+          properties:
+            _embedded:
+              type: object
+              properties:
+                items:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/UserSpam'
+
+    ###
+    # Errors
+    ###
+    ConstraintValidationError:
+      type: object
+      properties:
+        property_path:
+          type: string
+          readOnly: true
+        messages:
+          type: array
+          items:
+            type: string
+          readOnly: true
+
+    ConstraintValidationErrors:
+      type: array
+      items:
+        $ref: '#/components/schemas/ConstraintValidationError'
+
+  parameters:
+    PathUuid:
+      name: uuid
+      in: path
+      required: true
+      description: |
+        Represents an UUID v4 string, that can be used as a resource identifier.
+      schema:
+        $ref: '#/components/schemas/UUIDType'
