@@ -32,3 +32,4 @@ build/
 
 ### VS Code ###
 .gitlab-ci-infra.yml
+.env
