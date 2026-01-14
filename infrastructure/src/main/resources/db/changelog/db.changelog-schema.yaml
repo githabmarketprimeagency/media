@@ -83,12 +83,12 @@ databaseChangeLog:
               - column:
                   name: refresh_token_expired_at
                   type: timestamp
-              - column:
-                  name: metadatas
-                  type: jsonb
-              - column:
-                  name: metadatas_indexes
-                  type: jsonb
+#              - column:
+#                  name: metadatas
+#                  type: jsonb
+#              - column:
+#                  name: metadatas_indexes
+#                  type: jsonb
               - column:
                   name: created_by
                   type: varchar(255)
@@ -188,12 +188,12 @@ databaseChangeLog:
                   type: varchar(1000)
                   constraints:
                     nullable: false
-              - column:
-                  name: metadatas
-                  type: jsonb
-              - column:
-                  name: metadatas_indexes
-                  type: jsonb
+#              - column:
+#                  name: metadatas
+#                  type: jsonb
+#              - column:
+#                  name: metadatas_indexes
+#                  type: jsonb
               - column:
                   name: created_by
                   type: varchar(255)

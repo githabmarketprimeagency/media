@@ -11,11 +11,13 @@ import org.mapstruct.factory.Mappers;
 public interface MediaMapper {
     MediaMapper INSTANCE = Mappers.getMapper(MediaMapper.class);
 
-    @Mapping(target = "metadatas", source = "metadatas")
+    @Mapping(target = "metadatas", ignore = true)
+    @Mapping(target = "metadatasIndexes", ignore = true)
     @Mapping(target = "links", ignore = true)
     @Mapping(target = "provider", ignore = true)
     Media toDomain(MediaEntity entity);
 
-    @Mapping(target = "metadatas", source = "metadatas")
+    @Mapping(target = "metadatas", ignore = true)
+    @Mapping(target = "metadatasIndexes", ignore = true)
     MediaEntity fromDomain(Media model);
 }

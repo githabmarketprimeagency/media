@@ -11,10 +11,12 @@ import org.mapstruct.factory.Mappers;
 public interface ProviderMapper {
     ProviderMapper INSTANCE = Mappers.getMapper(ProviderMapper.class);
 
-    @Mapping(target = "metadatas", source = "metadatas")
+    @Mapping(target = "metadatas", ignore = true)
+    @Mapping(target = "metadatasIndexes", ignore = true)
     @Mapping(target = "links", ignore = true)
     Provider toDomain(ProviderEntity entity);
 
-    @Mapping(target = "metadatas", source = "metadatas")
+    @Mapping(target = "metadatas", ignore = true)
+    @Mapping(target = "metadatasIndexes", ignore = true)
     ProviderEntity fromDomain(Provider model);
 }

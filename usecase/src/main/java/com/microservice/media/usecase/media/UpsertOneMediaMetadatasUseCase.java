@@ -18,6 +18,7 @@ public class UpsertOneMediaMetadatasUseCase {
     private final MediaRepository mediaRepository;
 
     public void handle(UUID uuid, List<Metadata> metadatasToUpsert) {
+        /*
         Media media = mediaRepository.findOneByUuid(uuid)
                 .orElseThrow(() -> new NotFoundException(uuid));
 
@@ -36,5 +37,6 @@ public class UpsertOneMediaMetadatasUseCase {
 
         media.setMetadatas(new ArrayList<>(metadataMap.values()));
         mediaRepository.save(media);
+        */
     }
 }

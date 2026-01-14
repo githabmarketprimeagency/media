@@ -43,6 +43,7 @@ public class MediaEntity extends BaseTimestampedIdentified {
     @Column(name = "provider_path", length = 1000, nullable = false)
     private String providerPath;
 
+    /*
     @Type(JsonType.class)
     @Column(name = "metadatas", columnDefinition = "jsonb")
     private List<MetadataEntity> metadatas;
@@ -50,6 +51,7 @@ public class MediaEntity extends BaseTimestampedIdentified {
     @Type(JsonType.class)
     @Column(name = "metadatas_indexes", columnDefinition = "jsonb")
     private Object metadatasIndexes;
+    */
 
     @Column(name = "created_by", length = 255)
     private String createdBy;

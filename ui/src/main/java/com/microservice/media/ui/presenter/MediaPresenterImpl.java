@@ -104,9 +104,11 @@ public class MediaPresenterImpl implements MediaPresenter {
             media.setProviderPath(providerPath);
             media.setDescription(description);
 
+            /*
             if (metadatas != null) {
                 media.setMetadatas(MetadataMapper.INSTANCE.toDomain(metadatas));
             }
+            */
 
             String fileName = file.getOriginalFilename();
             if (fileName != null && fileName.contains(".")) {
@@ -181,13 +183,17 @@ public class MediaPresenterImpl implements MediaPresenter {
 
     @Override
     public ResponseEntity<Void> deleteOneMediaMetadatas(UUID uuid, MetadatasDto metadatasDto) {
+        /*
         deleteOneMediaMetadatasUseCase.handle(uuid, MetadataMapper.INSTANCE.toDomain(metadatasDto));
+        */
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @Override
     public ResponseEntity<Void> upsertOneMediaMetadatas(UUID uuid, MetadatasDto metadatasDto) {
+        /*
         upsertOneMediaMetadatasUseCase.handle(uuid, MetadataMapper.INSTANCE.toDomain(metadatasDto));
+        */
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

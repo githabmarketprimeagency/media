@@ -22,8 +22,10 @@ public class Media extends BaseTimestampedIdentified {
     private String description;
     private String providerUuid;
     private String providerPath;
+    /*
     private List<Metadata> metadatas;
     private Object metadatasIndexes;
+    */
     private String createdBy;
     private String updatedBy;
     private String deletedBy;

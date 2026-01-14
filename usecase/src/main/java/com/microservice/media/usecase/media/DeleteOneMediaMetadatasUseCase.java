@@ -17,6 +17,7 @@ public class DeleteOneMediaMetadatasUseCase {
     private final MediaRepository mediaRepository;
 
     public void handle(UUID uuid, List<Metadata> metadatasToDelete) {
+        /*
         Media media = mediaRepository.findOneByUuid(uuid)
                 .orElseThrow(() -> new NotFoundException(uuid));
 
@@ -34,5 +35,6 @@ public class DeleteOneMediaMetadatasUseCase {
 
         media.setMetadatas(updatedMetadatas);
         mediaRepository.save(media);
+        */
     }
 }

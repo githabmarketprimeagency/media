@@ -33,8 +33,10 @@ public class Provider extends BaseTimestampedIdentified {
     private Boolean isExpirableAccessToken;
     private String refreshToken;
     private OffsetDateTime refreshTokenExpiredAt;
+    /*
     private List<Metadata> metadatas;
     private Object metadatasIndexes;
+    */
     private String createdBy;
     private String updatedBy;
     private String deletedBy;

@@ -74,6 +74,7 @@ public class ProviderEntity extends BaseTimestampedIdentified {
     @Column(name = "refresh_token_expired_at")
     private OffsetDateTime refreshTokenExpiredAt;
 
+    /*
     @Type(JsonType.class)
     @Column(name = "metadatas", columnDefinition = "jsonb")
     private List<MetadataEntity> metadatas;
@@ -81,6 +82,7 @@ public class ProviderEntity extends BaseTimestampedIdentified {
     @Type(JsonType.class)
     @Column(name = "metadatas_indexes", columnDefinition = "jsonb")
     private Object metadatasIndexes;
+    */
 
     @Column(name = "created_by", length = 255)
     private String createdBy;
