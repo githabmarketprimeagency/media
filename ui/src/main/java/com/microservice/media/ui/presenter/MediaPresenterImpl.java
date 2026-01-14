@@ -21,14 +21,14 @@ import com.microservice.media.domain.repository.base.Criteria;
 import com.microservice.media.usecase.media.CountMediasUseCase;
 import com.microservice.media.usecase.media.CreateOneMediaUseCase;
 import com.microservice.media.usecase.media.DeleteOneMediaUseCase;
-import com.microservice.media.usecase.media.DeleteOneMediaMetadatasUseCase;
+//import com.microservice.media.usecase.media.DeleteOneMediaMetadatasUseCase;
 import com.microservice.media.usecase.media.DownloadOneMediaUseCase;
 import com.microservice.media.usecase.media.FindMediasUseCase;
 import com.microservice.media.usecase.media.GetOneMediaUseCase;
 import com.microservice.media.usecase.media.ImportOneMediaUseCase;
 import com.microservice.media.usecase.media.ReadOneMediaUseCase;
 import com.microservice.media.usecase.media.UpdateOneMediaUseCase;
-import com.microservice.media.usecase.media.UpsertOneMediaMetadatasUseCase;
+//import com.microservice.media.usecase.media.UpsertOneMediaMetadatasUseCase;
 
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -56,14 +56,14 @@ public class MediaPresenterImpl implements MediaPresenter {
     private final CountMediasUseCase countMediasUseCase;
     private final CreateOneMediaUseCase createOneMediaUseCase;
     private final DeleteOneMediaUseCase deleteOneMediaUseCase;
-    private final DeleteOneMediaMetadatasUseCase deleteOneMediaMetadatasUseCase;
+    //private final DeleteOneMediaMetadatasUseCase deleteOneMediaMetadatasUseCase;
     private final DownloadOneMediaUseCase downloadOneMediaUseCase;
     private final FindMediasUseCase findMediasUseCase;
     private final GetOneMediaUseCase getOneMediaUseCase;
     private final ImportOneMediaUseCase importOneMediaUseCase;
     private final ReadOneMediaUseCase readOneMediaUseCase;
     private final UpdateOneMediaUseCase updateOneMediaUseCase;
-    private final UpsertOneMediaMetadatasUseCase upsertOneMediaMetadatasUseCase;
+    //private final UpsertOneMediaMetadatasUseCase upsertOneMediaMetadatasUseCase;
 
     @Override
     public ResponseEntity<Integer> countMedias(CountMediasCriteriaDto criteriaDto) {

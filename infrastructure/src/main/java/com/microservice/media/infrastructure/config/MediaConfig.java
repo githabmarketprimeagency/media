@@ -8,14 +8,14 @@ import com.microservice.media.domain.repository.ProviderRepository;
 import com.microservice.media.usecase.media.CountMediasUseCase;
 import com.microservice.media.usecase.media.CreateOneMediaUseCase;
 import com.microservice.media.usecase.media.DeleteOneMediaUseCase;
-import com.microservice.media.usecase.media.DeleteOneMediaMetadatasUseCase;
+//import com.microservice.media.usecase.media.DeleteOneMediaMetadatasUseCase;
 import com.microservice.media.usecase.media.DownloadOneMediaUseCase;
 import com.microservice.media.usecase.media.FindMediasUseCase;
 import com.microservice.media.usecase.media.GetOneMediaUseCase;
 import com.microservice.media.usecase.media.ImportOneMediaUseCase;
 import com.microservice.media.usecase.media.ReadOneMediaUseCase;
 import com.microservice.media.usecase.media.UpdateOneMediaUseCase;
-import com.microservice.media.usecase.media.UpsertOneMediaMetadatasUseCase;
+//import com.microservice.media.usecase.media.UpsertOneMediaMetadatasUseCase;
 
 @Configuration
 public class MediaConfig {
@@ -35,10 +35,12 @@ public class MediaConfig {
         return new DeleteOneMediaUseCase(mediaRepository);
     }
 
+    /*
     @Bean
     DeleteOneMediaMetadatasUseCase getDeleteOneMediaMetadatasUseCase(MediaRepository mediaRepository) {
         return new DeleteOneMediaMetadatasUseCase(mediaRepository);
     }
+    */
 
     @Bean
     DownloadOneMediaUseCase getDownloadOneMediaUseCase(MediaRepository mediaRepository, ProviderRepository providerRepository) {
@@ -70,9 +72,11 @@ public class MediaConfig {
         return new UpdateOneMediaUseCase(mediaRepository, providerRepository);
     }
 
+    /*
     @Bean
     UpsertOneMediaMetadatasUseCase getUpsertOneMediaMetadatasUseCase(MediaRepository mediaRepository) {
         return new UpsertOneMediaMetadatasUseCase(mediaRepository);
     }
+    */
 
 }
