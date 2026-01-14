@@ -1,39 +1,39 @@
 - 2 - Je veux que tu développe toutes les couches nécessaires afin que les endpoints « /$endpoints soient développés et fonctionnels prêts à l’emploi.
 
-Je veux que tu prennes en exemple l'entité media dont les fichiers se trouvent dans ces fichiers / dossiers :
+Je veux que tu prennes en exemple l'entité provider dont les fichiers se trouvent dans ces fichiers / dossiers :
 
 DOMAIN :
 
-- domain/src/main/java/com/microservice/media/domain/model/Media.java
-- domain/src/main/java/com/microservice/media/domain/repository/MediaRepository.java
-- domain/src/main/java/com/microservice/media/domain/model/pagination/MediaPaginatedRepresentation.java
+- domain/src/main/java/com/microservice/media/domain/model/Provider.java
+- domain/src/main/java/com/microservice/media/domain/repository/ProviderRepository.java
+- domain/src/main/java/com/microservice/media/domain/model/pagination/ProviderPaginatedRepresentation.java
 
 INFRASTRUCTURE :
 
-- infrastructure/src/main/java/com/microservice/media/infrastructure/config/MediaConfig.java
-- infrastructure/src/main/java/com/microservice/media/infrastructure/gateway/MediaGateway.java
-- infrastructure/src/main/java/com/microservice/media/infrastructure/mapper/MediaMapper.java
-- infrastructure/src/main/java/com/microservice/media/infrastructure/mapper/hateoas/media/MediaAssembler.java
-- infrastructure/src/main/java/com/microservice/media/infrastructure/mapper/hateoas/media/MediaAssemblerMapper.java
-- infrastructure/src/main/java/com/microservice/media/infrastructure/mapper/hateoas/media/MediaModelAssembler.java
-- infrastructure/src/main/java/com/microservice/media/infrastructure/mapper/hateoas/media/MediaPaginatedAssemblerMapper.java
-- infrastructure/src/main/java/com/microservice/media/infrastructure/model/MediaEntity.java
-- infrastructure/src/main/java/com/microservice/media/infrastructure/repository/MediaRepository.java
+- infrastructure/src/main/java/com/microservice/media/infrastructure/config/ProviderConfig.java
+- infrastructure/src/main/java/com/microservice/media/infrastructure/gateway/ProviderGateway.java
+- infrastructure/src/main/java/com/microservice/media/infrastructure/mapper/ProviderMapper.java
+- infrastructure/src/main/java/com/microservice/media/infrastructure/mapper/hateoas/provider/ProviderAssembler.java
+- infrastructure/src/main/java/com/microservice/media/infrastructure/mapper/hateoas/provider/ProviderAssemblerMapper.java
+- infrastructure/src/main/java/com/microservice/media/infrastructure/mapper/hateoas/provider/ProviderModelAssembler.java
+- infrastructure/src/main/java/com/microservice/media/infrastructure/mapper/hateoas/provider/ProviderPaginatedAssemblerMapper.java
+- infrastructure/src/main/java/com/microservice/media/infrastructure/model/ProviderEntity.java
+- infrastructure/src/main/java/com/microservice/media/infrastructure/repository/ProviderRepository.java
 
 UI :
 
-- ui/src/main/java/com/microservice/media/ui/mapper/media/CreateMediaMapper.java
-- ui/src/main/java/com/microservice/media/ui/mapper/media/MediaMapper.java
-- ui/src/main/java/com/microservice/media/ui/presenter/MediaPresenterImpl.java
+- ui/src/main/java/com/microservice/media/ui/mapper/provider/CreateProviderMapper.java
+- ui/src/main/java/com/microservice/media/ui/mapper/provider/ProviderMapper.java
+- ui/src/main/java/com/microservice/media/ui/presenter/ProviderPresenterImpl.java
 
 USE CASE :
 
-- usecase/src/main/java/com/microservice/media/usecase/media/CountMediasUseCase.java
-- usecase/src/main/java/com/microservice/media/usecase/media/CreateOneMediaUseCase.java
-- usecase/src/main/java/com/microservice/media/usecase/media/DeleteOneMediaUseCase.java
-- usecase/src/main/java/com/microservice/media/usecase/media/FindMediasUseCase.java
-- usecase/src/main/java/com/microservice/media/usecase/media/GetOneMediaUseCase.java
-- usecase/src/main/java/com/microservice/media/usecase/media
+- usecase/src/main/java/com/microservice/media/usecase/provider/CountProvidersUseCase.java
+- usecase/src/main/java/com/microservice/media/usecase/provider/CreateOneProviderUseCase.java
+- usecase/src/main/java/com/microservice/media/usecase/provider/DeleteOneProviderUseCase.java
+- usecase/src/main/java/com/microservice/media/usecase/provider/FindProvidersUseCase.java
+- usecase/src/main/java/com/microservice/media/usecase/provider/GetOneProviderUseCase.java
+- usecase/src/main/java/com/microservice/media/usecase/provider
 
 PS 1 : Mets à jour le fichier de migration liquidbase afin qu'il reflete les tables créées
 
