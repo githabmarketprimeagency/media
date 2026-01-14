@@ -7,6 +7,8 @@ import lombok.Setter;
 @Setter
 public class Links {
     private Link self;
+    private Link read;
+    private Link download;
     private Link update;
     private Link delete;
 
