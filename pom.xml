@@ -13,8 +13,8 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	
-	<name>boilerplate</name>
-	<description>Boilerplate Micro Service</description>
+	<name>media</name>
+	<description>Media Micro Service</description>
 	<url/>
 	<licenses>
 		<license/>

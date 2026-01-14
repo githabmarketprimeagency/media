@@ -1,10 +1,10 @@
-# Boilerplate Microservice
+# Media Microservice
 
-This boilerplate microservice is a microservice responsible for detecting and managing spam for HTTP requests in applications.
+This media microservice is responsible for managing and storing media files with support for multiple storage providers.
 
-It provides **spam detection**, **threshold-based analysis**, **rule management**, and **multi-tenant support**.
+It provides **media upload and management**, **multi-provider storage support**, **metadata handling**, and **multi-tenant support**.
 
-> This service focuses on analyzing request patterns and user behavior to identify potential spam activities.
+> This service focuses on providing a unified interface for media storage across different cloud providers while maintaining flexibility and scalability.
 
 
 ---
@@ -21,14 +21,29 @@ The content is written in French, don't hesitate to translate if it is more conv
 
 ## ✅ Features
 
-- 🛡️ **Dual spam detection strategy**
-  - Repetitive request detection (URL + content analysis)
-  - User IP-based detection
-- ⚙️ **Configurable threshold system** with customizable periods and occurrence ranges
-- 🔄 **Spam rule lifecycle management** (activation/deactivation, expiration)
+- 📁 **Complete media file management**
+  - Upload, read, download, and delete operations
+  - File metadata tracking (name, extension, MIME type, size)
+- 🌐 **Multi-provider storage support**
+  - Native file system storage
+  - SharePoint integration
+  - OneDrive support
+  - Google Drive compatibility
+  - Azure Media Services
+- 🔐 **Provider authentication management**
+  - Multiple authentication strategies (OAuth2, API keys, service accounts)
+  - Token lifecycle management (access tokens, refresh tokens)
+  - Provider state tracking (not_configured, ready, expired)
+- 📊 **Metadata management system**
+  - Custom metadata per media and provider
+  - Flexible metadata indexing
+  - Metadata-based search capabilities
+- 🔍 **Advanced search and filtering**
+  - Flexible search operators (EQUAL, LIKE, OR)
+  - Date range filtering
+  - Pagination and sorting
 - 🏢 **Multi-tenant support** via entityUuid
 - 📊 **Complete REST API** with pagination and advanced filtering
-- 🔍 **Flexible search capabilities** (EQUAL, LIKE, OR operators)
 
 All business rules follow **Clean Architecture principles** to keep the core logic independent of frameworks and infrastructure concerns.
 
@@ -63,23 +78,48 @@ The project follows Clean Architecture principles with 4 Maven modules:
 
 ## 🎯 How It Works
 
-### Spam Detection Strategies
+### Media Management
 
-1. **Request-based detection**: Analyzes repetitive requests with the same URL and content
-   - Default thresholds: 5, 10, 15, or 100 occurrences
-   - Within periods: 1, 3, 5, or 60 minutes
+1. **File Upload**: Upload media files via multipart/form-data with automatic metadata extraction
+   - Automatic file extension detection
+   - MIME type validation
+   - File size tracking
 
-2. **User IP-based detection**: Monitors requests from the same IP address
-   - Default thresholds: 30, 100, or 1000 occurrences
-   - Within periods: 1, 3, or 60 minutes
+2. **File Access**: Multiple access patterns supported
+   - Read operation: Stream file content for viewing
+   - Download operation: Download file with proper headers
 
-### Threshold Configuration
+3. **Metadata Management**: Flexible metadata system
+   - Add custom key-value metadata to media
+   - Update or delete metadata independently
+   - Search media by metadata values
 
-Each detection strategy uses configurable ranges:
-- `sameRequestOccurenceRange` / `sameUserOccurenceRange`: Maximum allowed occurrences
-- `sameRequestPeriodRange` / `sameUserPeriodRange`: Time periods in minutes
+### Provider System
 
-When a threshold is exceeded, the system automatically creates spam records for tracking and management.
+The service supports multiple storage providers with different authentication mechanisms:
+
+1. **Native Provider**: Local file system storage
+   - No authentication required
+   - Direct file access
+
+2. **SharePoint/OneDrive**: Microsoft cloud storage
+   - OAuth2 authentication flow
+   - Support for application and delegated permissions
+   - Automatic token refresh
+
+3. **Google Drive**: Google cloud storage
+   - API key authentication
+   - Service account support
+   - User impersonation capabilities
+
+4. **Azure Media**: Azure Media Services integration
+   - Enterprise-grade media processing
+
+### Provider States
+
+- `not_configured`: Provider created but not fully configured
+- `ready`: Provider configured and ready to use
+- `expired`: Provider credentials expired and need renewal
 
 ---
 
@@ -95,7 +135,7 @@ To launch the application:
 ./mvnw -pl infrastructure spring-boot:run -Dspring-boot.run.profiles=h2
 ```
 
-## How to debug 
+## How to debug
 
 ```bash
 # Complete build
@@ -135,11 +175,10 @@ Required environment variables are defined in the `.env` file.
 
 ## 📡 API Endpoints
 
-The service exposes three main resource endpoints:
+The service exposes two main resource endpoints:
 
-- `/request-checks`: Manage spam verification requests
-- `/request-spams`: Manage spam records for repetitive requests
-- `/user-spams`: Manage spam records for user IPs
+- `/medias`: Manage media files
+- `/providers`: Manage storage providers
 
 Each endpoint supports:
 - Full CRUD operations

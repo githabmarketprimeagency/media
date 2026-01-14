@@ -1,11 +1,11 @@
 1 - Renommer les dossiers suivants en utilisant le nom du micro service "$nommicroservice" à la place de « boilerplate » :
 
-domain/src/main/java/com/microservice/boilerplate/
-infrastructure/src/main/java/com/microservice/boilerplate/
-ui/src/main/java/com/microservice/boilerplate/
-usecase/src/main/java/com/microservice/boilerplate/
+domain/src/main/java/com/microservice/media/
+infrastructure/src/main/java/com/microservice/media/
+ui/src/main/java/com/microservice/media/
+usecase/src/main/java/com/microservice/media/
 
-2 - Rechercher et remplacer dans le projet toutes les références de com.microservice.boilerplate par com.microservice.$nommicroservice
+2 - Rechercher et remplacer dans le projet toutes les références de com.microservice.media par com.microservice.$nommicroservice
 
 3 - Modifie la documentation du projet (readme.md et quelques pom.yml):
 
