@@ -18,7 +18,7 @@ public interface SearchCriteriaMapper {
     default public <T> List<Criteria> toCriteriaList(T object) {
 
         List<Criteria> criteriaList = new ArrayList<>();
-        Set<String> EXCLUDED_FIELDS = Set.of("isCacheable", "pageNumber", "pageSize");
+        Set<String> EXCLUDED_FIELDS = Set.of("pageNumber", "pageSize");
 
         for (Field field : object.getClass().getDeclaredFields()) {
             field.setAccessible(true);
