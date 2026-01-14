@@ -2,5 +2,5 @@ Je vais te demander une série d'actions dans lesquelles he vais introduire cert
 
 Lorsque je mentionnerai ces variables, il faudra que tu prennes e ncompte les valeurs que je vais te fournir.
 
-$nommicroservice = ...........
-$libelleMicroService = ..........
+$nommicroservice = media
+$libelleMicroService = Media
