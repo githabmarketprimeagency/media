@@ -1,40 +1,39 @@
 - 2 - Je veux que tu développe toutes les couches nécessaires afin que les endpoints « /$endpoints soient développés et fonctionnels prêts à l’emploi.
 
-Je veux que tu prennes en exemple l’entité requestchek dont les fichiers se trouvent dans ces fichiers / dossiers :
+Je veux que tu prennes en exemple l'entité media dont les fichiers se trouvent dans ces fichiers / dossiers :
 
 DOMAIN :
 
-- domain/src/main/java/com/microservice/boilerplate/domain/model/RequestCheck.java
-- domain/src/main/java/com/microservice/boilerplate/domain/repository/RequestCheckRepository.java
-- domain/src/main/java/com/microservice/boilerplate/domain/model/pagination/RequestCheckPaginatedRepresentation.java
+- domain/src/main/java/com/microservice/media/domain/model/Media.java
+- domain/src/main/java/com/microservice/media/domain/repository/MediaRepository.java
+- domain/src/main/java/com/microservice/media/domain/model/pagination/MediaPaginatedRepresentation.java
 
 INFRASTRUCTURE :
 
-- infrastructure/src/main/java/com/microservice/boilerplate/infrastructure/config/RequestCheckConfig.java
-- infrastructure/src/main/java/com/microservice/boilerplate/infrastructure/gateway/RequestCheckGateway.java
-- infrastructure/src/main/java/com/microservice/boilerplate/infrastructure/mapper/RequestCheckMapper.java
-- infrastructure/src/main/java/com/microservice/boilerplate/infrastructure/mapper/hateoas/requestcheck/RequestCheckAssembler.java
-- infrastructure/src/main/java/com/microservice/boilerplate/infrastructure/mapper/hateoas/requestcheck/RequestCheckAssemblerMapper.java
-- infrastructure/src/main/java/com/microservice/boilerplate/infrastructure/mapper/hateoas/requestcheck/RequestCheckModelAssembler.java
-- infrastructure/src/main/java/com/microservice/boilerplate/infrastructure/mapper/hateoas/requestcheck/RequestCheckPaginatedAssemblerMapper.java
-- infrastructure/src/main/java/com/microservice/boilerplate/infrastructure/model/RequestCheckEntity.java
-- infrastructure/src/main/java/com/microservice/boilerplate/infrastructure/repository/RequestCheckRepository.java
+- infrastructure/src/main/java/com/microservice/media/infrastructure/config/MediaConfig.java
+- infrastructure/src/main/java/com/microservice/media/infrastructure/gateway/MediaGateway.java
+- infrastructure/src/main/java/com/microservice/media/infrastructure/mapper/MediaMapper.java
+- infrastructure/src/main/java/com/microservice/media/infrastructure/mapper/hateoas/media/MediaAssembler.java
+- infrastructure/src/main/java/com/microservice/media/infrastructure/mapper/hateoas/media/MediaAssemblerMapper.java
+- infrastructure/src/main/java/com/microservice/media/infrastructure/mapper/hateoas/media/MediaModelAssembler.java
+- infrastructure/src/main/java/com/microservice/media/infrastructure/mapper/hateoas/media/MediaPaginatedAssemblerMapper.java
+- infrastructure/src/main/java/com/microservice/media/infrastructure/model/MediaEntity.java
+- infrastructure/src/main/java/com/microservice/media/infrastructure/repository/MediaRepository.java
 
 UI :
 
-- ui/src/main/java/com/microservice/boilerplate/ui/mapper/requestcheck/CreateRequestCheckMapper.java
-- ui/src/main/java/com/microservice/boilerplate/ui/mapper/requestcheck/RequestCheckMapper.java
-- ui/src/main/java/com/microservice/boilerplate/ui/presenter/RequestCheckPresenterImpl.java
+- ui/src/main/java/com/microservice/media/ui/mapper/media/CreateMediaMapper.java
+- ui/src/main/java/com/microservice/media/ui/mapper/media/MediaMapper.java
+- ui/src/main/java/com/microservice/media/ui/presenter/MediaPresenterImpl.java
 
 USE CASE :
 
-- usecase/src/main/java/com/microservice/boilerplate/usecase/requestcheck/CountRequestChecksUseCase.java
-- usecase/src/main/java/com/microservice/boilerplate/usecase/requestcheck/CreateOneRequestCheckUseCase.java
-- usecase/src/main/java/com/microservice/boilerplate/usecase/requestcheck/DeleteOneRequestCheckUseCase.java
-- usecase/src/main/java/com/microservice/boilerplate/usecase/requestcheck/FindRequestChecksUseCase.java
-- usecase/src/main/java/com/microservice/boilerplate/usecase/requestcheck/GetOneRequestCheckUseCase.java
-- usecase/src/main/java/com/microservice/boilerplate/usecase/requestcheck
-- usecase/src/main/java/com/microservice/boilerplate/usecase/service
+- usecase/src/main/java/com/microservice/media/usecase/media/CountMediasUseCase.java
+- usecase/src/main/java/com/microservice/media/usecase/media/CreateOneMediaUseCase.java
+- usecase/src/main/java/com/microservice/media/usecase/media/DeleteOneMediaUseCase.java
+- usecase/src/main/java/com/microservice/media/usecase/media/FindMediasUseCase.java
+- usecase/src/main/java/com/microservice/media/usecase/media/GetOneMediaUseCase.java
+- usecase/src/main/java/com/microservice/media/usecase/media
 
 PS 1 : Mets à jour le fichier de migration liquidbase afin qu'il reflete les tables créées
 
